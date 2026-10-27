@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#0f6f7f">
+  <title>Hearing – MEDSCOPE II</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Shown only if texts.js / app.js could not load (wrong way of opening the page) -->
+<div id="loadError" class="load-error" hidden>
+  <h1>The page did not load correctly</h1>
+  <p>Open it in Chrome by typing this in the address bar:<br>
+    <code>file:///sdcard/Download/hearing/index.html</code></p>
+  <p>(Opening it from the Files app does not work – see README.md.)</p>
+</div>
+
+<div id="app" class="app">
+
+  <!-- ============================== HOME ============================== -->
+  <section id="screen-home" class="screen active">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-ex" data-i18n="exhibition"></span>
+        <span class="brand-title" data-i18n="sectionTitle"></span>
+      </div>
+    </header>
+
+    <main class="home-main">
+      <div class="lang-row">
+        <span class="lang-label" data-i18n="chooseLanguage"></span>
+        <div class="lang-buttons">
+          <button class="lang-btn" data-lang="en">English</button>
+          <button class="lang-btn" data-lang="si">සිංහල</button>
+          <button class="lang-btn" data-lang="ta">தமிழ்</button>
+        </div>
+      </div>
+
+      <p class="home-intro" data-i18n="homeIntro" data-fit></p>
+
+      <div class="home-buttons">
+        <button class="big-btn big-btn-test" data-go="ack">
+          <svg class="big-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M22 44c0 6 4 10 9 10s7-3 8-7c1-3 3-5 6-8 4-4 6-8 6-14 0-11-8-19-19-19S13 14 13 25" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M24 26c0-5 3-8 8-8s8 3 8 8c0 4-3 6-5 8" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M46 52l5 5 9-11" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="big-text">
+            <span class="big-title" data-i18n="btnTest"></span>
+            <span class="big-sub" data-i18n="btnTestSub"></span>
+          </span>
+        </button>
+
+        <button class="big-btn big-btn-exp" data-go="list">
+          <svg class="big-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M10 38V32a22 22 0 0 1 44 0v6" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+            <rect x="6" y="36" width="12" height="20" rx="5" fill="currentColor"/>
+            <rect x="46" y="36" width="12" height="20" rx="5" fill="currentColor"/>
+          </svg>
+          <span class="big-text">
+            <span class="big-title" data-i18n="btnExperience"></span>
+            <span class="big-sub" data-i18n="btnExperienceSub"></span>
+          </span>
+        </button>
+      </div>
+
+      <p class="headphones-note">🎧 <span data-i18n="headphones"></span></p>
+    </main>
+  </section>
+
+  <!-- ========================= ACKNOWLEDGEMENT ========================= -->
+  <section id="screen-ack" class="screen">
+    <header class="topbar">
+      <button class="nav-btn" data-go="home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+        <span data-i18n="back"></span>
+      </button>
+      <h1 class="topbar-title" data-i18n="ackTitle"></h1>
+      <button class="nav-btn" data-go="home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7M6 9.5V20h12V9.5" /></svg>
+        <span data-i18n="home"></span>
+      </button>
+    </header>
+
+    <main class="ack-main">
+      <div class="ack-card">
+        <ul class="ack-list">
+          <li><span class="ack-ico">ℹ</span><span data-i18n="ack1"></span></li>
+          <li><span class="ack-ico">16+</span><span data-i18n="ack2"></span></li>
+          <li><span class="ack-ico">✚</span><span data-i18n="ack3"></span></li>
+        </ul>
+
+        <label class="ack-check">
+          <input type="checkbox" id="ackBox">
+          <span class="check-box" aria-hidden="true"></span>
+          <span data-i18n="ackCheck"></span>
+        </label>
+
+        <button id="ackContinue" class="primary-btn" disabled data-i18n="continue"></button>
+        <p class="ack-note" data-i18n="ackAppNote"></p>
+      </div>
+    </main>
+  </section>
+
+  <!-- ========================== CONDITIONS LIST ========================== -->
+  <section id="screen-list" class="screen">
+    <header class="topbar">
+      <button class="nav-btn" data-go="home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+        <span data-i18n="back"></span>
+      </button>
+      <h1 class="topbar-title" data-i18n="listTitle"></h1>
+      <button class="nav-btn" data-go="home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7M6 9.5V20h12V9.5" /></svg>
+        <span data-i18n="home"></span>
+      </button>
+    </header>
+
+    <main class="list-main">
+      <p class="list-sub">🎧 <span data-i18n="listSub"></span></p>
+      <div class="cards">
+        <button class="card" data-cond="presby">
+          <svg class="card-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="30" cy="14" r="7" fill="currentColor"/>
+            <path d="M30 24c-6 0-9 5-9 11v8h5l2 15h6l2-15h2" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M40 30l6 6v22" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+          <span class="card-name" data-i18n="presbyName"></span>
+          <span class="card-sub" data-i18n="presbyCard"></span>
+        </button>
+        <button class="card" data-cond="noise">
+          <svg class="card-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M8 24h10l14-12v40L18 40H8z" fill="currentColor"/>
+            <path d="M40 22c4 3 4 17 0 20M46 16c8 6 8 26 0 32M52 10c11 9 11 35 0 44" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+          <span class="card-name" data-i18n="noiseName"></span>
+          <span class="card-sub" data-i18n="noiseCard"></span>
+        </button>
+        <button class="card" data-cond="tinn">
+          <svg class="card-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M16 46c0 6 4 10 9 10s7-3 8-7c1-3 3-5 6-8 4-4 6-8 6-14 0-11-8-19-19-19S7 16 7 27" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M18 28c0-5 3-8 8-8s8 3 8 8c0 4-3 6-5 8" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M52 14l4-4M54 26h6M52 38l4 4" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+          <span class="card-name" data-i18n="tinnName"></span>
+          <span class="card-sub" data-i18n="tinnCard"></span>
+        </button>
+        <button class="card" data-cond="neuro">
+          <svg class="card-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M4 40c10 0 14-8 24-8s16 8 32-4" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+            <path d="M4 48c10 0 14-6 24-6s18 6 32-2" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+            <circle cx="30" cy="32" r="10" fill="currentColor"/>
+          </svg>
+          <span class="card-name" data-i18n="neuroName"></span>
+          <span class="card-sub" data-i18n="neuroCard"></span>
+        </button>
+      </div>
+      <p class="audio-admin">
+        <span id="audioAdminStatus"></span>
+        <button class="link-btn" data-action="choose-audio" data-i18n="changeAudio"></button>
+      </p>
+    </main>
+  </section>
+
+  <!-- ========================== CONDITION PAGE ========================== -->
+  <section id="screen-cond" class="screen">
+    <header class="topbar">
+      <button class="nav-btn" data-go="list">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+        <span data-i18n="back"></span>
+      </button>
+      <h1 class="topbar-title" id="condTitle"></h1>
+      <button class="nav-btn" data-go="home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7M6 9.5V20h12V9.5" /></svg>
+        <span data-i18n="home"></span>
+      </button>
+    </header>
+
+    <main class="cond-main">
+      <!-- LEFT: explanation + diagram -->
+      <div class="cond-left">
+        <p class="cond-text" id="condText" data-fit></p>
+        <div class="diagram-wrap">
+          <svg id="diagram" class="diagram" viewBox="0 0 520 290" aria-hidden="true">
+            <!-- outer ear -->
+            <path class="d-skin" d="M78 52 C30 50 14 100 24 150 C30 182 44 196 40 222 C38 240 56 252 72 244 C84 238 84 222 80 210 C76 196 84 186 82 172"/>
+            <path class="d-line" d="M66 84 C44 92 40 124 52 146"/>
+            <!-- ear canal -->
+            <path class="d-canal" d="M74 128 L188 130 L188 160 L74 162 Z"/>
+            <!-- eardrum -->
+            <ellipse class="d-drum" cx="191" cy="145" rx="4" ry="24"/>
+            <!-- middle ear -->
+            <rect class="d-middle" x="197" y="108" width="54" height="74" rx="16"/>
+            <g class="d-bones">
+              <circle cx="207" cy="134" r="6"/>
+              <circle cx="223" cy="126" r="6"/>
+              <path d="M207 134 L223 126 L241 142"/>
+              <path d="M236 136 h10 v14 h-10 z"/>
+            </g>
+            <!-- balance canals -->
+            <g class="d-balance">
+              <ellipse cx="282" cy="86" rx="20" ry="24"/>
+              <ellipse cx="306" cy="98" rx="24" ry="13"/>
+              <ellipse cx="270" cy="108" rx="12" ry="18"/>
+            </g>
+            <!-- cochlea -->
+            <path class="d-cochlea-base" d="M250 146 C262 140 272 140 282 146"/>
+            <path id="cochleaSpiral" class="d-cochlea"/>
+            <!-- nerves -->
+            <path class="d-nerve" d="M318 150 C346 140 366 132 398 118 C420 108 440 100 456 96"/>
+            <path class="d-nerve d-nerve-thin" d="M306 102 C330 112 348 124 366 132"/>
+            <!-- brain -->
+            <path class="d-brain" d="M440 60 C450 26 504 24 512 60 C520 90 506 130 474 128 C446 126 432 96 440 60 Z"/>
+            <path class="d-line" d="M458 52 C468 62 482 56 490 66 M452 86 C466 80 476 96 494 88 M470 110 C480 104 492 112 500 102"/>
+            <!-- tumour (acoustic neuroma only) -->
+            <circle id="dTumour" class="d-tumour" cx="370" cy="130" r="15"/>
+            <!-- problem highlight -->
+            <circle id="dHighlight" class="d-highlight" cx="300" cy="160" r="48"/>
+            <!-- labels -->
+            <text class="d-label" x="48" y="275" data-i18n="dOuter"></text>
+            <text class="d-label" x="222" y="208" data-i18n="dMiddle"></text>
+            <text class="d-label" x="300" y="238" data-i18n="dInner" id="lblInner"></text>
+            <text class="d-label" x="420" y="150" data-i18n="dNerve" id="lblNerve"></text>
+            <text class="d-label" x="476" y="20" data-i18n="dBrain"></text>
+            <text class="d-label d-label-tumour" x="370" y="104" data-i18n="dTumour" id="lblTumour"></text>
+            <text id="dEarL" class="d-ear-badge" x="22" y="34">L</text>
+          </svg>
+          <span class="problem-key"><span class="key-dot"></span><span data-i18n="dProblem"></span></span>
+        </div>
+      </div>
+
+      <!-- RIGHT: player -->
+      <div class="cond-right">
+        <div class="player" data-fit>
+          <div id="statusLabel" class="status-label">—</div>
+          <div class="progress">
+            <div id="progressFill" class="progress-fill"></div>
+            <div id="progressMark" class="progress-mark"></div>
+          </div>
+
+          <!-- shown when the speech file is missing -->
+          <div id="audioMissingBox" class="audio-missing" hidden>
+            <p id="audioMissingMsg"></p>
+            <button class="primary-btn" data-action="choose-audio" data-i18n="chooseFile"></button>
+          </div>
+
+          <div id="playerControls" class="player-row">
+            <button id="playBtn" class="play-btn">
+              <svg class="ico-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+              <svg class="ico-stop" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+              <span id="playBtnText"></span>
+            </button>
+            <div class="compare">
+              <span class="compare-hint" data-i18n="compareHint"></span>
+              <div id="modeToggle" class="segmented" data-disabled="true">
+                <button data-mode="normal" data-i18n="toggleNormal"></button>
+                <button data-mode="cond" id="toggleCondBtn"></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- condition-specific controls -->
+          <div class="extra" data-for="presby">
+            <span class="extra-label" data-i18n="severity"></span>
+            <div class="choice" data-param="severity">
+              <button data-value="0" data-i18n="mild"></button>
+              <button data-value="1" data-i18n="moderate"></button>
+              <button data-value="2" data-i18n="severe"></button>
+            </div>
+          </div>
+
+          <div class="extra" data-for="tinn">
+            <span class="extra-label" data-i18n="tinnSound"></span>
+            <div class="choice" data-param="sound">
+              <button data-value="ring" data-i18n="ring"></button>
+              <button data-value="buzz" data-i18n="buzz"></button>
+              <button data-value="hiss" data-i18n="hiss"></button>
+            </div>
+          </div>
+
+          <div class="extra extra-neuro" data-for="neuro">
+            <div class="neuro-row">
+              <span class="extra-label" data-i18n="stage"></span>
+              <div class="slider-wrap">
+                <span data-i18n="early"></span>
+                <input type="range" id="stageSlider" min="0" max="4" step="1" value="2">
+                <span data-i18n="late"></span>
+              </div>
+            </div>
+            <div class="lr-row">
+              <span class="lr-badge">L</span>
+              <span class="lr-text"><strong data-i18n="leftEarOnly"></strong><br><span data-i18n="lrReminder"></span></span>
+              <button id="lrTestBtn" class="small-btn" data-i18n="lrTest"></button>
+            </div>
+          </div>
+        </div>
+
+        <div id="todoBox" class="todo">
+          <h2 data-i18n="whatToDo"></h2>
+          <p id="condTodo" data-fit></p>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <footer class="footer"><span data-i18n="footer"></span></footer>
+
+  <!-- flash label for the left/right headphone test -->
+  <div id="lrFlash" class="lr-flash" hidden></div>
+</div>
+
+<input type="file" id="audioFileInput" accept="audio/*,.mp3,.m4a,.wav,.ogg" hidden>
+
+<script src="texts.js"></script>
+<script src="app.js"></script>
+<script>
+  if (!window.TEXT || !window.HEARING_APP_OK) {
+    document.getElementById('loadError').hidden = false;
+    document.getElementById('app').hidden = true;
+  }
+</script>
+</body>
+</html>

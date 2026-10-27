@@ -1,0 +1,10 @@
+{
+  "name": "Hearing – MEDSCOPE II",
+  "short_name": "Hearing",
+  "start_url": "index.html",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#eaf2f5",
+  "theme_color": "#0f6f7f",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

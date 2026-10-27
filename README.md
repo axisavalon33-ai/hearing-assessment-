@@ -13,6 +13,8 @@ needs no internet.
 | `style.css` | Colours and layout. |
 | `app.js` | How it works, plus the sound processing. Settings are at the top (see below). |
 | `speech.mp3` | **You add this:** your speech recording. |
+| `hearing-station.html` | **The single-file version for the tablet** (Option A). Made automatically. Don't edit it. |
+| `build.py`, `.github/workflows/build.yml` | Rebuild `hearing-station.html`. GitHub runs this for you. |
 | `sw.js`, `manifest.webmanifest`, `icon.svg` | Only used for the online-hosting option (Option B). They do no harm otherwise. |
 
 Keep all the files together in one folder, named `hearing`.
@@ -28,8 +30,8 @@ loudness and caps the maximum volume.
 
 If the page can't find `speech.mp3`, a condition page shows a
 **"Choose audio file"** button. Tap it and pick the recording from the tablet.
-The tablet remembers that choice, so you only do it once. (With Option A below
-you **will** need to do this once. See the note there.)
+With Option A, the easiest way is to upload `speech.mp3` to GitHub so it is
+built into the single file (see below).
 
 ## 2. Install hearWHO first
 
@@ -44,32 +46,42 @@ not installed, the button opens its Play Store page instead.
 
 ## 3. Put the page on the tablet
 
-### Option A – copy the files onto the tablet (fully offline)
+### Option A – one file on the tablet (fully offline)
 
-1. Connect the tablet to your computer with a USB cable. On the tablet, swipe
-   down from the top, tap the "USB" notification and choose **File transfer**.
-2. On the computer, open the tablet's storage (Windows: *This PC* → tablet name
-   → *Internal storage*; Mac: install *Android File Transfer* first).
-3. Open the **Download** folder and copy your whole `hearing` folder into it.
-4. On the tablet, open **Chrome**. Tap the address bar and type exactly:
+Newer Android versions stop Chrome from opening `file:///` addresses, so
+use the **single-file version**, `hearing-station.html`. Everything (text,
+design, code, and your recording if it is in the repository) is built into
+that one file. Nothing else needs to be next to it.
 
-   ```
-   file:///sdcard/Download/hearing/index.html
-   ```
+**Step 1 – get the file with your recording inside**
 
-   Then press Enter. If Chrome asks for permission to access files, tap **Allow**.
-5. Go to *Experience hearing loss* → any condition. Tap **Choose audio file**
-   and pick `speech.mp3` from *Downloads → hearing*. (Chrome doesn't let a
-   page read files next to it on its own, so this step is needed once. The
-   tablet then remembers the file.)
-6. Bookmark the page (⋮ menu → ☆) so you can open it quickly next time.
+1. On github.com, open this repository and upload your `speech.mp3`
+   (**Add file → Upload files**, then **Commit changes**).
+2. Wait about a minute. GitHub automatically rebuilds `hearing-station.html`
+   with the recording inside it (you can watch this under the **Actions** tab).
+   The same happens whenever you edit `texts.js` on GitHub.
+3. Click `hearing-station.html` → the **⋯** menu (or the download icon) →
+   **Download**.
 
-> **Do not** open `index.html` by tapping it in the *Files* app. That opens
-> it in a way where the other files can't load, and you will see a "did not
-> load correctly" message. Always type the address in Chrome as shown in step 4.
->
-> Some tablets with newer Android versions won't open `file:///` addresses at
-> all. If step 4 shows an error, use Option B.
+(If you skip uploading `speech.mp3`, the file still works. Visitors will see
+"Choose audio file" and you pick the recording on the tablet each time the
+page is opened.)
+
+**Step 2 – put it on the tablet**
+
+1. Copy `hearing-station.html` to the tablet's **Download** folder: by USB
+   cable (choose **File transfer** on the tablet), by emailing it to
+   yourself, or by Google Drive.
+2. On the tablet, open the **Files** app (or **My Files** on Samsung) →
+   **Downloads**, tap `hearing-station.html`, and choose **Chrome** when it
+   asks which app to use. (Don't choose "HTML Viewer", which can't play sound.)
+3. To get back to it quickly next time, bookmark it in Chrome (⋮ → ☆), or
+   leave the tab open. The page resets itself between visitors without
+   reloading.
+
+> The other files (`index.html`, `texts.js`, …) are the "source" you edit.
+> `hearing-station.html` is made from them automatically, so don't edit it
+> directly. Your changes would be lost at the next rebuild.
 
 ### Option B – host it online once, then use it offline (most reliable)
 
@@ -109,8 +121,9 @@ time it opens the page.
 
 Open `texts.js` in any text editor (on a computer: Notepad, TextEdit, or VS Code).
 Every language has the same list of entries. Change only the words inside the
-quotation marks, save, and copy the file to the tablet again (Option B:
-upload it to GitHub). Then reload the page.
+quotation marks. The easiest way is to edit it on github.com (open `texts.js`
+→ ✏️ pencil icon → **Commit changes**). GitHub then rebuilds
+`hearing-station.html`. Download it again and copy it to the tablet.
 
 The Sinhala and Tamil text was written for you to check. Please have a fluent
 speaker review it, especially the medical terms.

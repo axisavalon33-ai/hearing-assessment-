@@ -1,0 +1,1716 @@
+<!doctype html>
+<!-- GENERATED FILE - do not edit. Edit texts.js / app.js / style.css / index.html,
+     then run build.py (GitHub does this automatically). -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#0f6f7f">
+  <title>Hearing – MEDSCOPE II</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMwZjZmN2YiLz48cGF0aCBkPSJNMjQgNDRjMCA1IDMgOCA3IDhzNi0yIDctNmMxLTMgMy01IDUtNyA0LTQgNi04IDYtMTMgMC0xMC03LTE3LTE3LTE3UzE1IDE2IDE1IDI2IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNC41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNMjUgMjdjMC00IDMtNyA3LTdzNyAzIDcgN2MwIDQtMyA2LTUgNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjQuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+Cg==" type="image/svg+xml">
+  <style>
+/* ===== Hearing station – styles ===== */
+:root {
+  --bg: #eaf2f5;
+  --panel: #ffffff;
+  --ink: #15324a;
+  --ink-soft: #4c6577;
+  --primary: #0f6f7f;
+  --primary-dark: #0a5562;
+  --primary-soft: #d6ecef;
+  --accent: #2e6fb7;
+  --normal: #1d8656;
+  --normal-soft: #dcf2e6;
+  --cond: #b4531c;
+  --cond-soft: #fbe8db;
+  --problem: #d8402f;
+  --line: #c9d9e0;
+  --shadow: 0 0.15rem 0.6rem rgba(21, 50, 74, 0.10);
+  --radius: 1.1rem;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+/* Everything is sized in rem; the root size follows the screen so the
+   layout fits a landscape tablet without scrolling. */
+html {
+  font-size: min(2.35vh, 1.45vw);
+  height: 100%;
+}
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Noto Sans", "Noto Sans Sinhala", "Noto Sans Tamil", Roboto, "Segoe UI", system-ui, sans-serif;
+  line-height: 1.35;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+html[lang="si"] body { font-family: "Noto Sans Sinhala", "Noto Sans", "Iskoola Pota", Roboto, sans-serif; }
+html[lang="ta"] body { font-family: "Noto Sans Tamil", "Noto Sans", "Latha", Roboto, sans-serif; }
+html[lang="si"], html[lang="ta"] { line-height: 1.45; }
+
+[hidden] { display: none !important; }
+button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+button:disabled { cursor: default; }
+
+.app { height: 100%; display: flex; flex-direction: column; }
+
+.screen { display: none; flex: 1; min-height: 0; flex-direction: column; }
+.screen.active { display: flex; animation: fade .25s ease; }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* ---------- top bar ---------- */
+.topbar {
+  flex: none;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 0.7rem 1.4rem;
+  background: var(--primary);
+  color: #fff;
+  min-height: 4.6rem;
+}
+.brand { display: flex; flex-direction: column; }
+.brand-ex { font-size: 1.05rem; opacity: .85; letter-spacing: .02em; }
+.brand-title { font-size: 2.1rem; font-weight: 700; line-height: 1.1; }
+.topbar-title {
+  flex: 1; margin: 0; text-align: center;
+  font-size: 1.55rem; font-weight: 700; line-height: 1.15;
+}
+.nav-btn {
+  flex: none;
+  display: inline-flex; align-items: center; gap: .45rem;
+  min-width: 9.5rem; justify-content: center;
+  padding: .65rem 1.1rem;
+  border-radius: 0.8rem;
+  background: rgba(255,255,255,.16);
+  border: 2px solid rgba(255,255,255,.45);
+  color: #fff; font-size: 1.25rem; font-weight: 600;
+}
+.nav-btn:active { background: rgba(255,255,255,.32); }
+.nav-btn svg { width: 1.5rem; height: 1.5rem; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- footer ---------- */
+.footer {
+  flex: none;
+  text-align: center;
+  padding: .45rem 1rem;
+  font-size: 1rem;
+  color: var(--ink-soft);
+  background: #dbe8ed;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- home ---------- */
+.home-main {
+  flex: 1; min-height: 0;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 1.4rem 2.5rem 1rem;
+  gap: 1.2rem;
+}
+.lang-row { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
+.lang-label { font-size: 1.3rem; color: var(--ink-soft); font-weight: 600; }
+.lang-buttons { display: flex; gap: .8rem; }
+.lang-btn {
+  min-width: 10rem; padding: .7rem 1.4rem;
+  font-size: 1.45rem; font-weight: 700;
+  border-radius: 3rem;
+  background: var(--panel); color: var(--primary);
+  border: 3px solid var(--primary-soft);
+  box-shadow: var(--shadow);
+}
+.lang-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.lang-btn[data-lang="si"] { font-family: "Noto Sans Sinhala", sans-serif; }
+.lang-btn[data-lang="ta"] { font-family: "Noto Sans Tamil", sans-serif; }
+
+.home-intro {
+  margin: 0; max-width: 56rem; text-align: center;
+  font-size: 1.55rem; color: var(--ink);
+  max-height: 5.4em; overflow: hidden;
+}
+.home-buttons {
+  flex: 1; min-height: 0; width: 100%; max-width: 70rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+}
+.big-btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
+  padding: 1.5rem 2rem;
+  border-radius: 1.6rem;
+  color: #fff; text-align: center;
+  box-shadow: 0 .4rem 1.2rem rgba(21,50,74,.18);
+  transition: transform .1s;
+  min-height: 0;
+}
+.big-btn:active { transform: scale(.98); }
+.big-btn-test { background: linear-gradient(160deg, #1a8798, #0d5f6d); }
+.big-btn-exp  { background: linear-gradient(160deg, #3a7fc4, #24589a); }
+.big-icon { width: 6.5rem; height: 6.5rem; flex: none; }
+.big-text { display: flex; flex-direction: column; gap: .5rem; }
+.big-title { font-size: 2.3rem; font-weight: 800; line-height: 1.15; }
+.big-sub { font-size: 1.25rem; opacity: .92; }
+.headphones-note { margin: 0; font-size: 1.3rem; color: var(--ink-soft); font-weight: 600; }
+
+/* ---------- acknowledgement ---------- */
+.ack-main { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 1.2rem 2rem; }
+.ack-card {
+  width: 100%; max-width: 54rem;
+  background: var(--panel); border-radius: 1.6rem; box-shadow: var(--shadow);
+  padding: 1.8rem 2.6rem;
+  display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+}
+.ack-list { list-style: none; margin: 0; padding: 0; width: 100%; display: flex; flex-direction: column; gap: .9rem; }
+.ack-list li { display: flex; align-items: center; gap: 1.1rem; font-size: 1.55rem; font-weight: 600; }
+.ack-ico {
+  flex: none; width: 3.2rem; height: 3.2rem; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--primary-soft); color: var(--primary-dark);
+  font-weight: 800; font-size: 1.15rem;
+}
+.ack-check {
+  display: flex; align-items: center; gap: 1rem;
+  padding: .9rem 1.6rem; border-radius: 1rem;
+  background: #f3f8fa; border: 3px solid var(--line);
+  font-size: 1.6rem; font-weight: 700; cursor: pointer;
+}
+.ack-check input { position: absolute; opacity: 0; pointer-events: none; }
+.check-box {
+  width: 2.6rem; height: 2.6rem; border-radius: .5rem; flex: none;
+  border: 3px solid var(--primary); background: #fff;
+  display: grid; place-items: center;
+}
+.ack-check input:checked + .check-box { background: var(--primary); }
+.ack-check input:checked + .check-box::after {
+  content: ""; width: .8rem; height: 1.4rem; margin-top: -.3rem;
+  border: solid #fff; border-width: 0 .32rem .32rem 0; transform: rotate(45deg);
+}
+.ack-check:has(input:checked) { border-color: var(--primary); background: var(--primary-soft); }
+.primary-btn {
+  min-width: 18rem; padding: 1rem 2.4rem;
+  border-radius: 1rem;
+  background: var(--primary); color: #fff;
+  font-size: 1.7rem; font-weight: 800;
+  box-shadow: var(--shadow);
+}
+.primary-btn:active { background: var(--primary-dark); }
+.primary-btn:disabled { background: #b7c8cf; box-shadow: none; }
+.ack-note { margin: 0; font-size: 1.15rem; color: var(--ink-soft); text-align: center; }
+
+/* ---------- list ---------- */
+.list-main { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 1rem 2rem .6rem; gap: .9rem; }
+.list-sub { margin: 0; text-align: center; font-size: 1.4rem; font-weight: 600; color: var(--ink-soft); }
+.cards { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1.2rem; }
+.card {
+  display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto;
+  align-content: center; column-gap: 1.4rem; row-gap: .3rem;
+  padding: 1rem 1.6rem;
+  text-align: left;
+  background: var(--panel); border-radius: var(--radius); box-shadow: var(--shadow);
+  border: 3px solid transparent;
+  min-height: 0; overflow: hidden;
+}
+.card:active { border-color: var(--accent); }
+.card-icon { grid-row: 1 / 3; width: 5rem; height: 5rem; color: var(--accent); align-self: center; padding: .6rem; background: #e3eef9; border-radius: 1rem; }
+.card-name { font-size: 1.6rem; font-weight: 800; line-height: 1.2; align-self: end; }
+.card-sub { font-size: 1.2rem; color: var(--ink-soft); align-self: start; }
+.audio-admin { margin: 0; text-align: right; font-size: .9rem; color: #8aa0ad; }
+.link-btn { color: #7d95a3; text-decoration: underline; font-size: .9rem; padding: .2rem .4rem; }
+
+/* ---------- condition page ---------- */
+.cond-main {
+  flex: 1; min-height: 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+  padding: .9rem 1.4rem;
+}
+.cond-left, .cond-right { min-height: 0; display: flex; flex-direction: column; gap: .9rem; }
+.cond-text {
+  flex: none; margin: 0;
+  max-height: 48%;
+  overflow: hidden;
+  font-size: 1.45rem;
+  background: var(--panel); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 1rem 1.3rem;
+}
+.diagram-wrap {
+  flex: 1; min-height: 0; position: relative;
+  background: var(--panel); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: .5rem;
+  display: flex; flex-direction: column;
+}
+.diagram { flex: 1; min-height: 0; width: 100%; }
+.problem-key { position: absolute; right: 1rem; bottom: .6rem; display: flex; align-items: center; gap: .5rem; font-size: 1.05rem; font-weight: 700; color: var(--problem); }
+.key-dot { width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 3px dashed var(--problem); background: rgba(216,64,47,.12); }
+
+/* diagram parts */
+.d-skin { fill: #f4d7c4; stroke: #c99a80; stroke-width: 3; }
+.d-line { fill: none; stroke: #c99a80; stroke-width: 2.5; stroke-linecap: round; }
+.d-canal { fill: #f9e6d8; stroke: #c99a80; stroke-width: 2.5; }
+.d-drum { fill: #e8b9a0; stroke: #b07a60; stroke-width: 2; }
+.d-middle { fill: #eef3f6; stroke: #b8c9d2; stroke-width: 2; }
+.d-bones circle, .d-bones path { fill: #fff6e6; stroke: #a58a5a; stroke-width: 2.5; stroke-linejoin: round; }
+.d-bones path:first-of-type { fill: none; }
+.d-balance ellipse { fill: none; stroke: #7fb4c9; stroke-width: 6; }
+.d-cochlea, .d-cochlea-base { fill: none; stroke: #4aa0c4; stroke-width: 8; stroke-linecap: round; }
+.d-nerve { fill: none; stroke: #e5b432; stroke-width: 9; stroke-linecap: round; }
+.d-nerve-thin { stroke-width: 6; opacity: .8; }
+.d-brain { fill: #f3c9d3; stroke: #c78a99; stroke-width: 3; }
+.d-tumour { fill: #c9533f; stroke: #8f3123; stroke-width: 2.5; display: none; }
+.d-label { font-size: 15px; font-weight: 700; fill: #34505f; text-anchor: middle; paint-order: stroke; stroke: #fff; stroke-width: 4px; }
+.d-label-tumour { fill: #a23a2a; display: none; }
+.d-highlight {
+  fill: rgba(216,64,47,.10); stroke: var(--problem); stroke-width: 4; stroke-dasharray: 10 7;
+  transform-box: fill-box; transform-origin: center;
+  animation: pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse { 50% { transform: scale(1.08); opacity: .65; } }
+.d-ear-badge { font-size: 30px; font-weight: 800; fill: #b4531c; display: none; }
+.diagram.neuro .d-tumour, .diagram.neuro .d-label-tumour { display: inline; }
+.diagram.neuro .d-ear-badge { display: inline; }
+
+/* player – sizes in em so the whole panel can shrink to fit (see fitText) */
+.player {
+  flex: 1; min-height: 0; overflow: hidden;
+  font-size: 1rem;
+  background: var(--panel); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: .9em 1.2em;
+  display: flex; flex-direction: column; gap: .7em;
+}
+.status-label {
+  flex: none;
+  min-height: 3.5em;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
+  font-size: 1.6em; font-weight: 800; letter-spacing: .03em; line-height: 1.15;
+  padding: .35em .8em; border-radius: .55em;
+  background: #eef3f6; color: var(--ink-soft);
+  border: 3px solid var(--line);
+  transition: background .4s, color .4s, border-color .4s;
+}
+.status-label small { display: block; margin-top: .3em; font-size: .6em; font-weight: 600; letter-spacing: 0; line-height: 1.3; }
+.status-label.normal { background: var(--normal-soft); color: var(--normal); border-color: var(--normal); }
+.status-label.cond { background: var(--cond-soft); color: var(--cond); border-color: var(--cond); }
+
+.progress { flex: none; position: relative; height: .7em; background: #e2ebef; border-radius: 1em; overflow: hidden; }
+.progress-fill { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--primary); border-radius: 1em; }
+.progress-mark { position: absolute; top: 0; bottom: 0; width: 3px; background: var(--cond); left: 30%; }
+
+.player-row { flex: none; display: flex; align-items: flex-end; gap: 1em; }
+.play-btn {
+  flex: none;
+  display: inline-flex; align-items: center; gap: .35em;
+  padding: .5em 1em; min-width: 7em; justify-content: center;
+  border-radius: 2em;
+  background: var(--primary); color: #fff;
+  font-size: 1.65em; font-weight: 800;
+  box-shadow: var(--shadow);
+}
+.play-btn:active { background: var(--primary-dark); }
+.play-btn:disabled { background: #b7c8cf; }
+.play-btn svg { width: 1.15em; height: 1.15em; fill: currentColor; }
+.play-btn .ico-stop { display: none; }
+.play-btn.playing { background: #36566b; }
+.play-btn.playing .ico-play { display: none; }
+.play-btn.playing .ico-stop { display: inline; }
+
+.compare { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .25em; }
+.compare-hint { font-size: .95em; color: var(--ink-soft); line-height: 1.2; }
+.segmented { display: flex; border-radius: .8em; overflow: hidden; border: 3px solid var(--line); }
+.segmented button {
+  flex: 1; min-height: 3.2em; padding: .3em .5em;
+  font-size: 1.1em; font-weight: 700; line-height: 1.15;
+  background: #f5f8fa; color: var(--ink-soft);
+}
+.segmented button + button { border-left: 3px solid var(--line); }
+.segmented button[data-mode="normal"].on { background: var(--normal); color: #fff; }
+.segmented button[data-mode="cond"].on { background: var(--cond); color: #fff; }
+.segmented[data-disabled="true"] { opacity: .45; }
+
+.audio-missing { flex: none; text-align: center; display: flex; flex-direction: column; align-items: center; gap: .5em; }
+.audio-missing p { margin: 0; font-size: 1.15em; color: var(--problem); font-weight: 700; }
+.audio-missing .primary-btn { font-size: 1.4em; min-width: 0; padding: .55em 1.4em; }
+
+.extra { display: none; flex: none; flex-direction: column; gap: .4em; border-top: 2px solid #edf2f4; padding-top: .6em; }
+.extra.show { display: flex; }
+.extra-label { font-size: 1.1em; font-weight: 700; color: var(--ink-soft); }
+.choice { display: flex; gap: .5em; }
+.choice button {
+  flex: 1; padding: .5em .4em;
+  border-radius: .65em; border: 3px solid var(--line);
+  background: #f5f8fa; font-size: 1.25em; font-weight: 700; color: var(--ink);
+}
+.choice button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.neuro-row { display: flex; flex-direction: column; gap: .1em; }
+.slider-wrap { display: flex; align-items: center; gap: .8em; font-size: 1.05em; font-weight: 700; color: var(--ink-soft); }
+.slider-wrap input { flex: 1; min-width: 0; }
+input[type=range] { -webkit-appearance: none; appearance: none; height: 2.4em; background: transparent; }
+input[type=range]::-webkit-slider-runnable-track { height: .7em; border-radius: 1em; background: linear-gradient(90deg, #f3d36b, #c9533f); }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 2.2em; height: 2.2em; margin-top: -.75em; border-radius: 50%; background: #fff; border: 4px solid var(--accent); box-shadow: var(--shadow); }
+input[type=range]::-moz-range-track { height: .7em; border-radius: 1em; background: linear-gradient(90deg, #f3d36b, #c9533f); }
+input[type=range]::-moz-range-thumb { width: 2em; height: 2em; border-radius: 50%; background: #fff; border: 4px solid var(--accent); }
+
+.lr-row { display: flex; align-items: center; gap: .7em; background: #fff7e2; border: 2px solid #f0d58a; border-radius: .7em; padding: .4em .7em; }
+.lr-badge { flex: none; width: 2.2em; height: 2.2em; border-radius: 50%; background: var(--cond); color: #fff; font-weight: 800; font-size: 1.2em; display: grid; place-items: center; }
+.lr-text { flex: 1; font-size: .95em; line-height: 1.3; }
+.small-btn { flex: none; max-width: 9em; padding: .5em .7em; border-radius: .6em; background: #fff; border: 2px solid var(--accent); color: var(--accent); font-weight: 700; font-size: 1em; line-height: 1.2; }
+
+.todo {
+  flex: none;
+  max-height: 36%;
+  display: flex; flex-direction: column;
+  background: #e5f3ea; border: 3px solid #a9d8bb; border-radius: var(--radius);
+  padding: .6rem 1.1rem;
+  transition: box-shadow .4s, border-color .4s;
+}
+.todo h2 { flex: none; margin: 0 0 .15rem; font-size: 1.25rem; color: var(--normal); }
+.todo p { margin: 0; font-size: 1.3rem; font-weight: 600; overflow: hidden; min-height: 0; }
+.todo.highlight { border-color: var(--normal); box-shadow: 0 0 0 .4rem rgba(29,134,86,.25); animation: glow 1.2s ease 2; }
+@keyframes glow { 50% { box-shadow: 0 0 0 .8rem rgba(29,134,86,.12); } }
+/* left/right flash */
+.lr-flash {
+  position: fixed; top: 40%; padding: 1.2rem 2.4rem; border-radius: 1.2rem;
+  background: var(--cond); color: #fff; font-size: 3rem; font-weight: 800;
+  box-shadow: 0 .6rem 2rem rgba(0,0,0,.25);
+  pointer-events: none;
+}
+.lr-flash.left { left: 6%; }
+.lr-flash.right { right: 6%; }
+
+/* load error */
+.load-error { padding: 2rem; font-family: sans-serif; font-size: 20px; color: #15324a; }
+.load-error code { background: #fff; padding: .2em .4em; border-radius: .3em; }
+
+/* portrait warning: the station is designed for landscape */
+@media (orientation: portrait) {
+  html { font-size: 2.2vw; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Shown only if texts.js / app.js could not load (wrong way of opening the page) -->
+<div id="loadError" class="load-error" hidden>
+  <h1>The page did not load correctly</h1>
+  <p>On the tablet, open <strong>hearing-station.html</strong> (the single-file
+    version) instead – tap it in the Files app and choose Chrome. See README.md.</p>
+</div>
+
+<div id="app" class="app">
+
+  <!-- ============================== HOME ============================== -->
+  <section id="screen-home" class="screen active">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-ex" data-i18n="exhibition"></span>
+        <span class="brand-title" data-i18n="sectionTitle"></span>
+      </div>
+    </header>
+
+    <main class="home-main">
+      <div class="lang-row">
+        <span class="lang-label" data-i18n="chooseLanguage"></span>
+        <div class="lang-buttons">
+          <button class="lang-btn" data-lang="en">English</button>
+          <button class="lang-btn" data-lang="si">සිංහල</button>
+          <button class="lang-btn" data-lang="ta">தமிழ்</button>
+        </div>
+      </div>
+
+      <p class="home-intro" data-i18n="homeIntro" data-fit></p>
+
+      <div class="home-buttons">
+        <button class="big-btn big-btn-test" data-go="ack">
+          <svg class="big-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M22 44c0 6 4 10 9 10s7-3 8-7c1-3 3-5 6-8 4-4 6-8 6-14 0-11-8-19-19-19S13 14 13 25" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M24 26c0-5 3-8 8-8s8 3 8 8c0 4-3 6-5 8" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M46 52l5 5 9-11" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="big-text">
+            <span class="big-title" data-i18n="btnTest"></span>
+            <span class="big-sub" data-i18n="btnTestSub"></span>
+          </span>
+        </button>
+
+        <button class="big-btn big-btn-exp" data-go="list">
+          <svg class="big-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M10 38V32a22 22 0 0 1 44 0v6" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+            <rect x="6" y="36" width="12" height="20" rx="5" fill="currentColor"/>
+            <rect x="46" y="36" width="12" height="20" rx="5" fill="currentColor"/>
+          </svg>
+          <span class="big-text">
+            <span class="big-title" data-i18n="btnExperience"></span>
+            <span class="big-sub" data-i18n="btnExperienceSub"></span>
+          </span>
+        </button>
+      </div>
+
+      <p class="headphones-note">🎧 <span data-i18n="headphones"></span></p>
+    </main>
+  </section>
+
+  <!-- ========================= ACKNOWLEDGEMENT ========================= -->
+  <section id="screen-ack" class="screen">
+    <header class="topbar">
+      <button class="nav-btn" data-go="home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+        <span data-i18n="back"></span>
+      </button>
+      <h1 class="topbar-title" data-i18n="ackTitle"></h1>
+      <button class="nav-btn" data-go="home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7M6 9.5V20h12V9.5" /></svg>
+        <span data-i18n="home"></span>
+      </button>
+    </header>
+
+    <main class="ack-main">
+      <div class="ack-card">
+        <ul class="ack-list">
+          <li><span class="ack-ico">ℹ</span><span data-i18n="ack1"></span></li>
+          <li><span class="ack-ico">16+</span><span data-i18n="ack2"></span></li>
+          <li><span class="ack-ico">✚</span><span data-i18n="ack3"></span></li>
+        </ul>
+
+        <label class="ack-check">
+          <input type="checkbox" id="ackBox">
+          <span class="check-box" aria-hidden="true"></span>
+          <span data-i18n="ackCheck"></span>
+        </label>
+
+        <button id="ackContinue" class="primary-btn" disabled data-i18n="continue"></button>
+        <p class="ack-note" data-i18n="ackAppNote"></p>
+      </div>
+    </main>
+  </section>
+
+  <!-- ========================== CONDITIONS LIST ========================== -->
+  <section id="screen-list" class="screen">
+    <header class="topbar">
+      <button class="nav-btn" data-go="home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+        <span data-i18n="back"></span>
+      </button>
+      <h1 class="topbar-title" data-i18n="listTitle"></h1>
+      <button class="nav-btn" data-go="home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7M6 9.5V20h12V9.5" /></svg>
+        <span data-i18n="home"></span>
+      </button>
+    </header>
+
+    <main class="list-main">
+      <p class="list-sub">🎧 <span data-i18n="listSub"></span></p>
+      <div class="cards">
+        <button class="card" data-cond="presby">
+          <svg class="card-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="30" cy="14" r="7" fill="currentColor"/>
+            <path d="M30 24c-6 0-9 5-9 11v8h5l2 15h6l2-15h2" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M40 30l6 6v22" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+          <span class="card-name" data-i18n="presbyName"></span>
+          <span class="card-sub" data-i18n="presbyCard"></span>
+        </button>
+        <button class="card" data-cond="noise">
+          <svg class="card-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M8 24h10l14-12v40L18 40H8z" fill="currentColor"/>
+            <path d="M40 22c4 3 4 17 0 20M46 16c8 6 8 26 0 32M52 10c11 9 11 35 0 44" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+          <span class="card-name" data-i18n="noiseName"></span>
+          <span class="card-sub" data-i18n="noiseCard"></span>
+        </button>
+        <button class="card" data-cond="tinn">
+          <svg class="card-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M16 46c0 6 4 10 9 10s7-3 8-7c1-3 3-5 6-8 4-4 6-8 6-14 0-11-8-19-19-19S7 16 7 27" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M18 28c0-5 3-8 8-8s8 3 8 8c0 4-3 6-5 8" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M52 14l4-4M54 26h6M52 38l4 4" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+          <span class="card-name" data-i18n="tinnName"></span>
+          <span class="card-sub" data-i18n="tinnCard"></span>
+        </button>
+        <button class="card" data-cond="neuro">
+          <svg class="card-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M4 40c10 0 14-8 24-8s16 8 32-4" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+            <path d="M4 48c10 0 14-6 24-6s18 6 32-2" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+            <circle cx="30" cy="32" r="10" fill="currentColor"/>
+          </svg>
+          <span class="card-name" data-i18n="neuroName"></span>
+          <span class="card-sub" data-i18n="neuroCard"></span>
+        </button>
+      </div>
+      <p class="audio-admin">
+        <span id="audioAdminStatus"></span>
+        <button class="link-btn" data-action="choose-audio" data-i18n="changeAudio"></button>
+      </p>
+    </main>
+  </section>
+
+  <!-- ========================== CONDITION PAGE ========================== -->
+  <section id="screen-cond" class="screen">
+    <header class="topbar">
+      <button class="nav-btn" data-go="list">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+        <span data-i18n="back"></span>
+      </button>
+      <h1 class="topbar-title" id="condTitle"></h1>
+      <button class="nav-btn" data-go="home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7M6 9.5V20h12V9.5" /></svg>
+        <span data-i18n="home"></span>
+      </button>
+    </header>
+
+    <main class="cond-main">
+      <!-- LEFT: explanation + diagram -->
+      <div class="cond-left">
+        <p class="cond-text" id="condText" data-fit></p>
+        <div class="diagram-wrap">
+          <svg id="diagram" class="diagram" viewBox="0 0 520 290" aria-hidden="true">
+            <!-- outer ear -->
+            <path class="d-skin" d="M78 52 C30 50 14 100 24 150 C30 182 44 196 40 222 C38 240 56 252 72 244 C84 238 84 222 80 210 C76 196 84 186 82 172"/>
+            <path class="d-line" d="M66 84 C44 92 40 124 52 146"/>
+            <!-- ear canal -->
+            <path class="d-canal" d="M74 128 L188 130 L188 160 L74 162 Z"/>
+            <!-- eardrum -->
+            <ellipse class="d-drum" cx="191" cy="145" rx="4" ry="24"/>
+            <!-- middle ear -->
+            <rect class="d-middle" x="197" y="108" width="54" height="74" rx="16"/>
+            <g class="d-bones">
+              <circle cx="207" cy="134" r="6"/>
+              <circle cx="223" cy="126" r="6"/>
+              <path d="M207 134 L223 126 L241 142"/>
+              <path d="M236 136 h10 v14 h-10 z"/>
+            </g>
+            <!-- balance canals -->
+            <g class="d-balance">
+              <ellipse cx="282" cy="86" rx="20" ry="24"/>
+              <ellipse cx="306" cy="98" rx="24" ry="13"/>
+              <ellipse cx="270" cy="108" rx="12" ry="18"/>
+            </g>
+            <!-- cochlea -->
+            <path class="d-cochlea-base" d="M250 146 C262 140 272 140 282 146"/>
+            <path id="cochleaSpiral" class="d-cochlea"/>
+            <!-- nerves -->
+            <path class="d-nerve" d="M318 150 C346 140 366 132 398 118 C420 108 440 100 456 96"/>
+            <path class="d-nerve d-nerve-thin" d="M306 102 C330 112 348 124 366 132"/>
+            <!-- brain -->
+            <path class="d-brain" d="M440 60 C450 26 504 24 512 60 C520 90 506 130 474 128 C446 126 432 96 440 60 Z"/>
+            <path class="d-line" d="M458 52 C468 62 482 56 490 66 M452 86 C466 80 476 96 494 88 M470 110 C480 104 492 112 500 102"/>
+            <!-- tumour (acoustic neuroma only) -->
+            <circle id="dTumour" class="d-tumour" cx="370" cy="130" r="15"/>
+            <!-- problem highlight -->
+            <circle id="dHighlight" class="d-highlight" cx="300" cy="160" r="48"/>
+            <!-- labels -->
+            <text class="d-label" x="48" y="275" data-i18n="dOuter"></text>
+            <text class="d-label" x="222" y="208" data-i18n="dMiddle"></text>
+            <text class="d-label" x="300" y="238" data-i18n="dInner" id="lblInner"></text>
+            <text class="d-label" x="420" y="150" data-i18n="dNerve" id="lblNerve"></text>
+            <text class="d-label" x="476" y="20" data-i18n="dBrain"></text>
+            <text class="d-label d-label-tumour" x="370" y="104" data-i18n="dTumour" id="lblTumour"></text>
+            <text id="dEarL" class="d-ear-badge" x="22" y="34">L</text>
+          </svg>
+          <span class="problem-key"><span class="key-dot"></span><span data-i18n="dProblem"></span></span>
+        </div>
+      </div>
+
+      <!-- RIGHT: player -->
+      <div class="cond-right">
+        <div class="player" data-fit>
+          <div id="statusLabel" class="status-label">—</div>
+          <div class="progress">
+            <div id="progressFill" class="progress-fill"></div>
+            <div id="progressMark" class="progress-mark"></div>
+          </div>
+
+          <!-- shown when the speech file is missing -->
+          <div id="audioMissingBox" class="audio-missing" hidden>
+            <p id="audioMissingMsg"></p>
+            <button class="primary-btn" data-action="choose-audio" data-i18n="chooseFile"></button>
+          </div>
+
+          <div id="playerControls" class="player-row">
+            <button id="playBtn" class="play-btn">
+              <svg class="ico-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+              <svg class="ico-stop" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+              <span id="playBtnText"></span>
+            </button>
+            <div class="compare">
+              <span class="compare-hint" data-i18n="compareHint"></span>
+              <div id="modeToggle" class="segmented" data-disabled="true">
+                <button data-mode="normal" data-i18n="toggleNormal"></button>
+                <button data-mode="cond" id="toggleCondBtn"></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- condition-specific controls -->
+          <div class="extra" data-for="presby">
+            <span class="extra-label" data-i18n="severity"></span>
+            <div class="choice" data-param="severity">
+              <button data-value="0" data-i18n="mild"></button>
+              <button data-value="1" data-i18n="moderate"></button>
+              <button data-value="2" data-i18n="severe"></button>
+            </div>
+          </div>
+
+          <div class="extra" data-for="tinn">
+            <span class="extra-label" data-i18n="tinnSound"></span>
+            <div class="choice" data-param="sound">
+              <button data-value="ring" data-i18n="ring"></button>
+              <button data-value="buzz" data-i18n="buzz"></button>
+              <button data-value="hiss" data-i18n="hiss"></button>
+            </div>
+          </div>
+
+          <div class="extra extra-neuro" data-for="neuro">
+            <div class="neuro-row">
+              <span class="extra-label" data-i18n="stage"></span>
+              <div class="slider-wrap">
+                <span data-i18n="early"></span>
+                <input type="range" id="stageSlider" min="0" max="4" step="1" value="2">
+                <span data-i18n="late"></span>
+              </div>
+            </div>
+            <div class="lr-row">
+              <span class="lr-badge">L</span>
+              <span class="lr-text"><strong data-i18n="leftEarOnly"></strong><br><span data-i18n="lrReminder"></span></span>
+              <button id="lrTestBtn" class="small-btn" data-i18n="lrTest"></button>
+            </div>
+          </div>
+        </div>
+
+        <div id="todoBox" class="todo">
+          <h2 data-i18n="whatToDo"></h2>
+          <p id="condTodo" data-fit></p>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <footer class="footer"><span data-i18n="footer"></span></footer>
+
+  <!-- flash label for the left/right headphone test -->
+  <div id="lrFlash" class="lr-flash" hidden></div>
+</div>
+
+<input type="file" id="audioFileInput" accept="audio/*,.mp3,.m4a,.wav,.ogg" hidden>
+
+<script>
+/* =====================================================================
+   ALL ON-SCREEN TEXT FOR THE HEARING STATION
+   ---------------------------------------------------------------------
+   HOW TO EDIT
+   - Each language has its own block below: en (English), si (Sinhala),
+     ta (Tamil). The same "key" (the word before the colon) appears in
+     every language.
+   - Only change the text INSIDE the quotation marks "like this".
+   - Do not delete the quotation marks, the colons, or the commas at the
+     end of each line.
+   - If your text needs a quotation mark inside it, use ' or “ ” instead.
+   - {name} is replaced automatically with the condition's short name.
+   - After saving, reload the page in Chrome to see the change.
+   ===================================================================== */
+
+window.TEXT = {
+
+  /* ------------------------------------------------------------------ */
+  en: {
+    languageName: "English",
+    exhibition: "MEDSCOPE II – Neurosurgery and Neuroscience",
+    sectionTitle: "Hearing",
+    chooseLanguage: "Choose language",
+    homeIntro: "How well do you hear? Try a quick hearing check, or hear what the world sounds like with a hearing problem.",
+    headphones: "Please put on the headphones",
+
+    btnTest: "Test your hearing",
+    btnTestSub: "A quick check with the hearWHO app",
+    btnExperience: "Experience hearing loss",
+    btnExperienceSub: "Hear speech the way people with hearing problems hear it",
+
+    footer: "Simulation for education only – not a medical test.",
+    home: "Home",
+    back: "Back",
+
+    ackTitle: "Before you start",
+    ack1: "This is a screening simulation, not a medical diagnosis.",
+    ack2: "For ages 16+.",
+    ack3: "If you are worried about your hearing, see a doctor.",
+    ackCheck: "I understand",
+    continue: "Continue",
+    ackAppNote: "The hearWHO app will open. When you finish, come back to this screen.",
+
+    listTitle: "Experience hearing loss",
+    listSub: "Choose a condition. Wear the headphones.",
+
+    presbyName: "Age-related hearing loss (presbycusis)",
+    presbyShort: "Age-related hearing loss",
+    presbyCard: "Getting older",
+    presbyText: "As we age, the tiny hair cells and nerve fibres for high-pitched sounds wear out first. Speech sounds muffled and people hear but can't make out words, especially in noisy places.",
+    presbyTodo: "Get a hearing test if you often ask people to repeat themselves. Hearing aids help a lot.",
+
+    noiseName: "Noise-induced hearing loss",
+    noiseShort: "Noise-induced hearing loss",
+    noiseCard: "Too much loud sound",
+    noiseText: "Loud music, earphones at high volume, or machinery can permanently damage the hair cells and nerve in the inner ear. It sounds muffled and often comes with ringing.",
+    noiseTodo: "Keep earphones below 60% volume, take breaks, and use ear protection around loud machines. This damage cannot be reversed, but it can be prevented.",
+
+    tinnName: "Tinnitus",
+    tinnShort: "Tinnitus",
+    tinnCard: "Hearing sounds that aren't there",
+    tinnText: "Tinnitus is hearing a sound that isn't really there – ringing, buzzing or hissing. It often comes with damage to the inner ear or hearing nerve.",
+    tinnTodo: "If tinnitus is in one ear only, sudden, or pulses with your heartbeat, see a doctor.",
+
+    neuroName: "Acoustic neuroma (vestibular schwannoma)",
+    neuroShort: "Acoustic neuroma",
+    neuroCard: "A growth on the hearing nerve",
+    neuroText: "A non-cancerous tumour growing on the hearing and balance nerve. It slowly reduces hearing in one ear, often with ringing and sometimes dizziness. It can be treated with surgery or radiotherapy.",
+    neuroTodo: "Hearing loss or ringing in only one ear should always be checked by a doctor.",
+
+    play: "Play",
+    stop: "Stop",
+    playAgain: "Play again",
+    labelNormal: "NORMAL HEARING",
+    labelWith: "WITH {name}",
+    labelReady: "Press Play to listen",
+    pressPlayHint: "First 5 seconds: normal hearing. Then the same speech with the condition.",
+    compareHint: "Tap to compare at any time:",
+    toggleNormal: "Normal",
+    whatToDo: "What to do",
+
+    severity: "Severity",
+    mild: "Mild",
+    moderate: "Moderate",
+    severe: "Severe",
+
+    tinnSound: "Choose the sound",
+    ring: "Ring",
+    buzz: "Buzz",
+    hiss: "Hiss",
+
+    stage: "How far it has grown",
+    early: "Early",
+    late: "Late",
+    leftEarOnly: "Affects the LEFT ear only",
+    lrReminder: "Check the headphones: L on your left ear, R on your right ear.",
+    lrTest: "Test left / right",
+    lrLeft: "LEFT",
+    lrRight: "RIGHT",
+
+    dOuter: "Outer ear",
+    dMiddle: "Middle ear",
+    dInner: "Inner ear (cochlea)",
+    dNerve: "Hearing nerve",
+    dBrain: "Brain",
+    dProblem: "Problem area",
+    dTumour: "Tumour",
+
+    audioLoading: "Loading sound…",
+    audioMissing: "The speech recording (speech.mp3) was not found.",
+    chooseFile: "Choose audio file",
+    audioError: "This file could not be played. Please try an MP3 file.",
+    changeAudio: "Change audio file",
+    audioReady: "Audio ready"
+  },
+
+  /* ------------------------------------------------------------------ */
+  si: {
+    languageName: "සිංහල",
+    exhibition: "MEDSCOPE II – ස්නායු ශල්‍යකර්ම සහ ස්නායු විද්‍යාව",
+    sectionTitle: "ශ්‍රවණය",
+    chooseLanguage: "භාෂාව තෝරන්න",
+    homeIntro: "ඔබට කොතරම් හොඳින් ඇසෙනවාද? කෙටි ශ්‍රවණ පරීක්ෂාවක් කර බලන්න, නැතහොත් ශ්‍රවණ ගැටලුවක් ඇති විට ලෝකය ඇසෙන ආකාරය අත්විඳින්න.",
+    headphones: "කරුණාකර හෙඩ්ෆෝන් පළඳින්න",
+
+    btnTest: "ඔබේ ශ්‍රවණය පරීක්ෂා කරන්න",
+    btnTestSub: "hearWHO යෙදුම සමඟ කෙටි පරීක්ෂාවක්",
+    btnExperience: "ශ්‍රවණ හානිය අත්විඳින්න",
+    btnExperienceSub: "ශ්‍රවණ ගැටලු ඇති අයට කතාව ඇසෙන ආකාරය අසන්න",
+
+    footer: "අධ්‍යාපනය සඳහා පමණක් වූ අනුකරණයකි – වෛද්‍ය පරීක්ෂණයක් නොවේ.",
+    home: "මුල් පිටුව",
+    back: "ආපසු",
+
+    ackTitle: "ආරම්භ කිරීමට පෙර",
+    ack1: "මෙය පරීක්ෂණ අනුකරණයක් පමණි, වෛද්‍ය රෝග විනිශ්චයක් නොවේ.",
+    ack2: "වයස අවුරුදු 16 සහ ඊට වැඩි අය සඳහා.",
+    ack3: "ඔබේ ශ්‍රවණය ගැන කනස්සල්ලක් ඇත්නම්, වෛද්‍යවරයෙකු හමුවන්න.",
+    ackCheck: "මම මෙය තේරුම් ගතිමි",
+    continue: "ඉදිරියට",
+    ackAppNote: "hearWHO යෙදුම විවෘත වේ. අවසන් වූ පසු, මෙම තිරයට නැවත පැමිණෙන්න.",
+
+    listTitle: "ශ්‍රවණ හානිය අත්විඳින්න",
+    listSub: "තත්ත්වයක් තෝරන්න. හෙඩ්ෆෝන් පළඳින්න.",
+
+    presbyName: "වයස්ගත වීම නිසා ඇතිවන ශ්‍රවණ හානිය (ප්‍රෙස්බිකියුසිස්)",
+    presbyShort: "වයස නිසා ශ්‍රවණ හානිය",
+    presbyCard: "වයසට යාම",
+    presbyText: "වයසට යත්ම, උස් හඬවල් (high-pitched sounds) ඇසීමට උදව් වන කුඩා රෝම සෛල සහ ස්නායු තන්තු මුලින්ම ගෙවී යයි. කතාව අපැහැදිලිව ඇසෙන අතර, විශේෂයෙන් ඝෝෂාකාරී ස්ථානවලදී, හඬ ඇසුණත් වචන තේරුම් ගැනීමට අපහසු වේ.",
+    presbyTodo: "අනෙක් අයගෙන් නැවත කියන්නැයි ඔබ නිතර ඉල්ලන්නේ නම්, ශ්‍රවණ පරීක්ෂණයක් කරගන්න. ශ්‍රවණාධාරක (hearing aids) ඉතා උපකාරී වේ.",
+
+    noiseName: "ඝෝෂාව නිසා ඇතිවන ශ්‍රවණ හානිය",
+    noiseShort: "ඝෝෂාව නිසා ශ්‍රවණ හානිය",
+    noiseCard: "අධික ශබ්දය",
+    noiseText: "අධික හඬින් සංගීතය, ඉහළ ශබ්දයෙන් ඉයර්ෆෝන් භාවිතය, හෝ යන්ත්‍රවල ශබ්දය නිසා අභ්‍යන්තර කනේ රෝම සෛල සහ ස්නායුවට ස්ථිර හානි සිදු විය හැක. ශබ්ද අපැහැදිලිව ඇසෙන අතර, බොහෝ විට කනේ නාදයක් (ringing) ද ඇසේ.",
+    noiseTodo: "ඉයර්ෆෝන් ශබ්දය 60%ට වඩා අඩුවෙන් තබා ගන්න, අතරින් පතර විවේක ගන්න, සහ ශබ්ද අධික යන්ත්‍ර අසල කන් ආරක්ෂක භාවිත කරන්න. මෙම හානිය නැවත සුව කළ නොහැකි නමුත්, එය වළක්වා ගත හැක.",
+
+    tinnName: "ටිනිටස් (කනේ ශබ්ද ඇසීම)",
+    tinnShort: "ටිනිටස්",
+    tinnCard: "නැති ශබ්ද ඇසීම",
+    tinnText: "ටිනිටස් යනු සැබවින්ම නොමැති ශබ්දයක් ඇසීමයි – නාදයක්, ගුමු ගුමු හඬක් හෝ ෂ් හඬක්. එය බොහෝ විට අභ්‍යන්තර කනට හෝ ශ්‍රවණ ස්නායුවට සිදුවන හානිය සමඟ ඇති වේ.",
+    tinnTodo: "ටිනිටස් එක් කනක පමණක් ඇත්නම්, හදිසියේ ඇති වූයේ නම්, හෝ හෘද ස්පන්දනය සමඟ තාලයට ඇසේ නම්, වෛද්‍යවරයෙකු හමුවන්න.",
+
+    neuroName: "ඇකූස්ටික් නියුරෝමාව (වෙස්ටිබියුලර් ෂ්වානෝමාව)",
+    neuroShort: "ඇකූස්ටික් නියුරෝමාව",
+    neuroCard: "ශ්‍රවණ ස්නායුවේ වර්ධනයක්",
+    neuroText: "ශ්‍රවණ හා සමබරතා ස්නායුව මත වැඩෙන, පිළිකාවක් නොවන ගෙඩියකි. එය සෙමින් එක් කනක ශ්‍රවණය අඩු කරන අතර, බොහෝ විට කනේ නාදයක් සහ සමහර විට කරකැවිල්ල ද ඇති කරයි. ශල්‍යකර්මයෙන් හෝ විකිරණ ප්‍රතිකාර මඟින් එයට ප්‍රතිකාර කළ හැක.",
+    neuroTodo: "එක් කනක පමණක් ශ්‍රවණ හානියක් හෝ නාදයක් ඇත්නම්, සැමවිටම වෛද්‍යවරයෙකු ලවා පරීක්ෂා කරවා ගන්න.",
+
+    play: "වාදනය",
+    stop: "නවත්වන්න",
+    playAgain: "නැවත වාදනය",
+    labelNormal: "සාමාන්‍ය ශ්‍රවණය",
+    labelWith: "{name} සමඟ",
+    labelReady: "සවන් දීමට වාදනය ඔබන්න",
+    pressPlayHint: "මුල් තත්පර 5: සාමාන්‍ය ශ්‍රවණය. පසුව එම කතාවම මෙම තත්ත්වය සහිතව.",
+    compareHint: "සසඳා බැලීමට ඕනෑම වේලාවක ඔබන්න:",
+    toggleNormal: "සාමාන්‍ය",
+    whatToDo: "කළ යුතු දේ",
+
+    severity: "බරපතලකම",
+    mild: "මෘදු",
+    moderate: "මධ්‍යම",
+    severe: "දැඩි",
+
+    tinnSound: "ශබ්දය තෝරන්න",
+    ring: "නාදය",
+    buzz: "ගුමු හඬ",
+    hiss: "ෂ් හඬ",
+
+    stage: "ගෙඩිය වර්ධනය වී ඇති ප්‍රමාණය",
+    early: "මුල් අවධිය",
+    late: "පසු අවධිය",
+    leftEarOnly: "බලපාන්නේ වම් කනට පමණි",
+    lrReminder: "හෙඩ්ෆෝන් පරීක්ෂා කරන්න: L වම් කනට, R දකුණු කනට.",
+    lrTest: "වම / දකුණ පරීක්ෂාව",
+    lrLeft: "වම",
+    lrRight: "දකුණ",
+
+    dOuter: "පිටත කන",
+    dMiddle: "මැද කන",
+    dInner: "අභ්‍යන්තර කන (කොක්ලියාව)",
+    dNerve: "ශ්‍රවණ ස්නායුව",
+    dBrain: "මොළය",
+    dProblem: "ගැටලුව ඇති ස්ථානය",
+    dTumour: "ගෙඩිය",
+
+    audioLoading: "ශබ්දය පූරණය වෙමින්…",
+    audioMissing: "කතා පටිගත කිරීම (speech.mp3) හමු නොවීය.",
+    chooseFile: "ශ්‍රව්‍ය ගොනුවක් තෝරන්න",
+    audioError: "මෙම ගොනුව වාදනය කළ නොහැක. කරුණාකර MP3 ගොනුවක් උත්සාහ කරන්න.",
+    changeAudio: "ශ්‍රව්‍ය ගොනුව වෙනස් කරන්න",
+    audioReady: "ශබ්දය සූදානම්"
+  },
+
+  /* ------------------------------------------------------------------ */
+  ta: {
+    languageName: "தமிழ்",
+    exhibition: "MEDSCOPE II – நரம்பியல் அறுவை சிகிச்சை மற்றும் நரம்பியல்",
+    sectionTitle: "செவித்திறன்",
+    chooseLanguage: "மொழியைத் தேர்ந்தெடுக்கவும்",
+    homeIntro: "உங்களுக்கு எவ்வளவு நன்றாகக் கேட்கிறது? ஒரு சிறிய செவித்திறன் சோதனையைச் செய்து பாருங்கள், அல்லது கேட்டல் பிரச்சினை இருக்கும்போது உலகம் எப்படிக் கேட்கும் என்பதை அனுபவியுங்கள்.",
+    headphones: "தயவுசெய்து ஹெட்ஃபோன்களை அணியுங்கள்",
+
+    btnTest: "உங்கள் செவித்திறனைச் சோதியுங்கள்",
+    btnTestSub: "hearWHO செயலியுடன் ஒரு சிறிய சோதனை",
+    btnExperience: "செவித்திறன் இழப்பை அனுபவியுங்கள்",
+    btnExperienceSub: "கேட்டல் பிரச்சினை உள்ளவர்களுக்குப் பேச்சு எப்படிக் கேட்கிறது என்று கேளுங்கள்",
+
+    footer: "கல்விக்கான பாவனை மட்டுமே – இது மருத்துவப் பரிசோதனை அல்ல.",
+    home: "முகப்பு",
+    back: "பின்செல்",
+
+    ackTitle: "தொடங்குவதற்கு முன்",
+    ack1: "இது ஒரு பரிசோதனைப் பாவனை மட்டுமே, மருத்துவ நோயறிதல் அல்ல.",
+    ack2: "16 வயதும் அதற்கு மேற்பட்டவர்களுக்கும்.",
+    ack3: "உங்கள் செவித்திறன் குறித்துக் கவலை இருந்தால், மருத்துவரை அணுகுங்கள்.",
+    ackCheck: "நான் இதைப் புரிந்துகொண்டேன்",
+    continue: "தொடரவும்",
+    ackAppNote: "hearWHO செயலி திறக்கும். முடிந்ததும் இந்தத் திரைக்குத் திரும்பி வாருங்கள்.",
+
+    listTitle: "செவித்திறன் இழப்பை அனுபவியுங்கள்",
+    listSub: "ஒரு நிலையைத் தேர்ந்தெடுங்கள். ஹெட்ஃபோன்களை அணியுங்கள்.",
+
+    presbyName: "வயது தொடர்பான செவித்திறன் இழப்பு (பிரெஸ்பைகியூசிஸ்)",
+    presbyShort: "வயது தொடர்பான செவித்திறன் இழப்பு",
+    presbyCard: "வயதாகுதல்",
+    presbyText: "வயதாகும்போது, உயர் சுருதி ஒலிகளுக்கான சிறிய மயிர்க் கலங்களும் நரம்பு இழைகளும் முதலில் தேய்ந்துவிடுகின்றன. பேச்சு மங்கலாகக் கேட்கும்; குறிப்பாகச் சத்தமான இடங்களில், ஒலி கேட்டாலும் சொற்களைப் புரிந்துகொள்ள முடியாது.",
+    presbyTodo: "மற்றவர்களை அடிக்கடி மீண்டும் சொல்லும்படி கேட்கிறீர்கள் என்றால், செவித்திறன் பரிசோதனை செய்துகொள்ளுங்கள். செவிப்புலன் கருவிகள் (hearing aids) பெரிதும் உதவும்.",
+
+    noiseName: "சத்தத்தால் ஏற்படும் செவித்திறன் இழப்பு",
+    noiseShort: "சத்தத்தால் ஏற்படும் செவித்திறன் இழப்பு",
+    noiseCard: "அதிக சத்தம்",
+    noiseText: "உரத்த இசை, அதிக ஒலியில் இயர்ஃபோன்கள், அல்லது இயந்திரங்களின் சத்தம் உள் காதிலுள்ள மயிர்க் கலங்களையும் நரம்பையும் நிரந்தரமாகச் சேதப்படுத்தலாம். ஒலிகள் மங்கலாகக் கேட்கும்; பெரும்பாலும் காதில் ரீங்கார ஒலியும் சேர்ந்து வரும்.",
+    noiseTodo: "இயர்ஃபோன் ஒலியளவை 60%க்குக் கீழே வைத்திருங்கள், இடையிடையே ஓய்வு எடுங்கள், உரத்த இயந்திரங்களுக்கு அருகில் காது பாதுகாப்புச் சாதனங்களைப் பயன்படுத்துங்கள். இந்தச் சேதத்தைச் சரிசெய்ய முடியாது, ஆனால் தடுக்க முடியும்.",
+
+    tinnName: "காதிரைச்சல் (டினிடஸ்)",
+    tinnShort: "காதிரைச்சல்",
+    tinnCard: "இல்லாத ஒலிகள் கேட்பது",
+    tinnText: "காதிரைச்சல் என்பது உண்மையில் இல்லாத ஒரு ஒலியைக் கேட்பது – மணியொலி, ரீங்காரம் அல்லது ‘ஸ்ஸ்’ ஒலி. இது பெரும்பாலும் உள் காது அல்லது கேட்டல் நரம்பின் சேதத்துடன் சேர்ந்து வருகிறது.",
+    tinnTodo: "காதிரைச்சல் ஒரு காதில் மட்டும் இருந்தால், திடீரென்று தோன்றினால், அல்லது இதயத் துடிப்புடன் சேர்ந்து துடித்தால், மருத்துவரை அணுகுங்கள்.",
+
+    neuroName: "அக்கூஸ்டிக் நியூரோமா (வெஸ்டிபுலர் ஷ்வானோமா)",
+    neuroShort: "அக்கூஸ்டிக் நியூரோமா",
+    neuroCard: "கேட்டல் நரம்பில் ஒரு கட்டி",
+    neuroText: "கேட்டல் மற்றும் சமநிலை நரம்பில் வளரும் புற்றுநோய் அல்லாத ஒரு கட்டி. இது ஒரு காதின் கேட்கும் திறனை மெதுவாகக் குறைக்கிறது; பெரும்பாலும் காதிரைச்சலும், சில வேளைகளில் தலைச்சுற்றலும் ஏற்படும். அறுவை சிகிச்சை அல்லது கதிர்வீச்சு சிகிச்சை மூலம் இதற்குச் சிகிச்சையளிக்கலாம்.",
+    neuroTodo: "ஒரு காதில் மட்டும் கேட்டல் இழப்பு அல்லது ரீங்காரம் இருந்தால், எப்போதும் மருத்துவரிடம் பரிசோதித்துக்கொள்ள வேண்டும்.",
+
+    play: "இயக்கு",
+    stop: "நிறுத்து",
+    playAgain: "மீண்டும் இயக்கு",
+    labelNormal: "சாதாரண கேட்டல்",
+    labelWith: "{name} உடன்",
+    labelReady: "கேட்க ‘இயக்கு’ அழுத்துங்கள்",
+    pressPlayHint: "முதல் 5 வினாடிகள்: சாதாரண கேட்டல். பின்னர் அதே பேச்சு இந்த நிலையுடன்.",
+    compareHint: "ஒப்பிட்டுப் பார்க்க எந்நேரமும் அழுத்துங்கள்:",
+    toggleNormal: "சாதாரணம்",
+    whatToDo: "என்ன செய்ய வேண்டும்",
+
+    severity: "தீவிரம்",
+    mild: "லேசானது",
+    moderate: "மிதமானது",
+    severe: "கடுமையானது",
+
+    tinnSound: "ஒலியைத் தேர்ந்தெடுங்கள்",
+    ring: "மணியொலி",
+    buzz: "ரீங்காரம்",
+    hiss: "ஸ்ஸ் ஒலி",
+
+    stage: "கட்டி எவ்வளவு வளர்ந்துள்ளது",
+    early: "ஆரம்ப நிலை",
+    late: "பிந்திய நிலை",
+    leftEarOnly: "இடது காதை மட்டுமே பாதிக்கிறது",
+    lrReminder: "ஹெட்ஃபோனைச் சரிபாருங்கள்: L இடது காதில், R வலது காதில்.",
+    lrTest: "இடது / வலது சோதனை",
+    lrLeft: "இடது",
+    lrRight: "வலது",
+
+    dOuter: "வெளிக் காது",
+    dMiddle: "நடுக் காது",
+    dInner: "உள் காது (கொக்ளியா)",
+    dNerve: "கேட்டல் நரம்பு",
+    dBrain: "மூளை",
+    dProblem: "பிரச்சினை உள்ள இடம்",
+    dTumour: "கட்டி",
+
+    audioLoading: "ஒலி ஏற்றப்படுகிறது…",
+    audioMissing: "பேச்சுப் பதிவு (speech.mp3) கிடைக்கவில்லை.",
+    chooseFile: "ஒலிக் கோப்பைத் தேர்ந்தெடுங்கள்",
+    audioError: "இந்தக் கோப்பை இயக்க முடியவில்லை. MP3 கோப்பை முயற்சிக்கவும்.",
+    changeAudio: "ஒலிக் கோப்பை மாற்று",
+    audioReady: "ஒலி தயார்"
+  }
+};
+
+</script>
+<script>
+/* =====================================================================
+   HEARING STATION – app logic and live audio simulation
+   ===================================================================== */
+(function () {
+  'use strict';
+
+  /* ------------------------------------------------------------------
+     SETTINGS YOU MAY WANT TO CHANGE
+     ------------------------------------------------------------------ */
+  var CONFIG = {
+    // Master volume ceiling (0 to 1). The speech is first evened out to a
+    // fixed loudness, then multiplied by this. Lower = quieter.
+    MAX_VOLUME: 0.35,
+    // Absolute peak limit after everything (0 to 1). Nothing can ever be
+    // louder than this, whatever the recording is like.
+    PEAK_LIMIT: 0.4,
+    // Loudness every recording is evened out to before MAX_VOLUME.
+    SPEECH_LEVEL: 0.1,
+
+    NORMAL_SECONDS: 5,      // how long the clip plays normally first
+    AUTO_FADE_SECONDS: 1.2, // smooth change from normal to condition
+    TOGGLE_FADE_SECONDS: 0.25,
+    IDLE_SECONDS: 60,       // no touch for this long -> back to home
+    FULLSCREEN: true,       // go full screen on first touch
+
+    AUDIO_FILE: 'speech.mp3',
+    HEARWHO_LINK: 'intent://#Intent;package=com.hearxgroup.hearwho;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.hearxgroup.hearwho;end',
+
+    // Tinnitus sound levels (kept well below the speech).
+    TINNITUS: { ring: 0.012, buzz: 0.05, hiss: 0.045 },
+    NOISE_RING_LEVEL: 0.008,  // soft 4 kHz ringing for noise-induced loss
+
+    DEFAULT_LANG: 'en'
+  };
+
+  var T = window.TEXT;
+  if (!T) return;
+
+  /* ------------------------------------------------------------------
+     Small helpers
+     ------------------------------------------------------------------ */
+  var $ = function (sel, root) { return (root || document).querySelector(sel); };
+  var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+  var dbToGain = function (db) { return Math.pow(10, db / 20); };
+
+  var state = {
+    lang: CONFIG.DEFAULT_LANG,
+    screen: 'home',
+    cond: null,
+    params: { severity: 1, sound: 'ring', stage: 2 },
+    lastTouch: Date.now()
+  };
+
+  function t(key) {
+    var pack = T[state.lang] || T.en;
+    return (pack[key] != null) ? pack[key] : (T.en[key] != null ? T.en[key] : key);
+  }
+
+  /* ------------------------------------------------------------------
+     Language
+     ------------------------------------------------------------------ */
+  function applyLanguage() {
+    document.documentElement.lang = state.lang;
+    $$('[data-i18n]').forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
+    $$('.lang-btn').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === state.lang); });
+    if (state.cond) renderCondition();
+    updateAudioUI();
+    fitText();
+  }
+
+  function setLanguage(lang) {
+    if (!T[lang]) return;
+    state.lang = lang;
+    try { localStorage.setItem('hearing-lang', lang); } catch (e) { /* ignore */ }
+    applyLanguage();
+  }
+
+  /* Shrinks text that would overflow its box, so nothing needs scrolling. */
+  function fitText() {
+    requestAnimationFrame(function () {
+      $$('.screen.active [data-fit]').forEach(function (el) {
+        el.style.fontSize = '';
+        var size = parseFloat(getComputedStyle(el).fontSize);
+        var min = size * 0.6;
+        while (el.scrollHeight > el.clientHeight + 1 && size > min) {
+          size *= 0.95;
+          el.style.fontSize = size + 'px';
+        }
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     Screens
+     ------------------------------------------------------------------ */
+  function show(name) {
+    if (name !== 'cond') stopPlayback();
+    state.screen = name;
+    $$('.screen').forEach(function (s) { s.classList.toggle('active', s.id === 'screen-' + name); });
+    if (name === 'ack') { $('#ackBox').checked = false; updateAck(); }
+    if (name === 'home' || name === 'list') state.cond = null;
+    fitText();
+  }
+
+  function goHome() {
+    stopPlayback();
+    state.params = { severity: 1, sound: 'ring', stage: 2 };
+    show('home');
+  }
+
+  /* ------------------------------------------------------------------
+     Acknowledgement + hearWHO
+     ------------------------------------------------------------------ */
+  function updateAck() { $('#ackContinue').disabled = !$('#ackBox').checked; }
+
+  function openHearWHO() {
+    if (!$('#ackBox').checked) return;
+    window.location.href = CONFIG.HEARWHO_LINK;
+    // When the visitor comes back from the app, start fresh on the home page.
+    setTimeout(goHome, 1500);
+  }
+
+  /* ------------------------------------------------------------------
+     Conditions
+     ------------------------------------------------------------------ */
+  var CONDITIONS = {
+    presby: { highlight: 'cochlea' },
+    noise:  { highlight: 'cochlea' },
+    tinn:   { highlight: 'both' },
+    neuro:  { highlight: 'nerve' }
+  };
+
+  function openCondition(id) {
+    state.cond = id;
+    renderCondition();
+    show('cond');
+    resetPlayerUI();
+  }
+
+  function renderCondition() {
+    var id = state.cond;
+    $('#condTitle').textContent = t(id + 'Name');
+    $('#condText').textContent = t(id + 'Text');
+    $('#condTodo').textContent = t(id + 'Todo');
+    $('#toggleCondBtn').textContent = t(id + 'Short');
+
+    $$('.extra').forEach(function (el) { el.classList.toggle('show', el.getAttribute('data-for') === id); });
+    syncChoiceButtons();
+    $('#stageSlider').value = state.params.stage;
+
+    // Diagram highlight
+    var dia = $('#diagram');
+    dia.classList.toggle('neuro', id === 'neuro');
+    var hl = $('#dHighlight');
+    var where = CONDITIONS[id].highlight;
+    if (where === 'nerve') { setAttrs(hl, { cx: 370, cy: 132, r: 34 }); }
+    else if (where === 'both') { setAttrs(hl, { cx: 330, cy: 150, r: 66 }); }
+    else { setAttrs(hl, { cx: 300, cy: 160, r: 46 }); }
+
+    updateStatusLabel();
+    fitText();
+  }
+
+  function setAttrs(el, attrs) { for (var k in attrs) el.setAttribute(k, attrs[k]); }
+
+  function syncChoiceButtons() {
+    $$('.choice').forEach(function (group) {
+      var p = group.getAttribute('data-param');
+      $$('button', group).forEach(function (b) {
+        b.classList.toggle('on', String(state.params[p]) === b.getAttribute('data-value'));
+      });
+    });
+  }
+
+  /* Draws the cochlea spiral in the diagram. */
+  function drawCochlea() {
+    var cx = 300, cy = 160, turns = 2.6, rMax = 34, rMin = 6, steps = 120, d = '';
+    for (var i = 0; i <= steps; i++) {
+      var f = i / steps;
+      var a = Math.PI + f * turns * 2 * Math.PI;
+      var r = rMax - (rMax - rMin) * f;
+      var x = cx + r * Math.cos(a), y = cy + r * Math.sin(a);
+      d += (i ? ' L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+    }
+    $('#cochleaSpiral').setAttribute('d', d);
+  }
+
+  /* ------------------------------------------------------------------
+     AUDIO ENGINE
+     One speech recording is processed live with the Web Audio API.
+
+       speech -> level -> mono ─┬─> normal bus ───────────────┐
+                                └─> condition effect -> cond bus ┴─> master volume -> peak limiter -> headphones
+
+     The two buses are cross-faded to switch between normal and condition.
+     ------------------------------------------------------------------ */
+  var ctx = null, master = null, limiter = null;
+  var speechBuffer = null, speechLevel = 1;
+  var audioStatus = 'loading'; // loading | ready | missing | error
+  var audioSource = '';        // 'file' (speech.mp3) or 'chosen'
+  var play = null;             // the current playback, or null
+
+  function getCtx() {
+    if (ctx) return ctx;
+    var AC = window.AudioContext || window.webkitAudioContext;
+    ctx = new AC();
+    master = ctx.createGain();
+    master.gain.value = CONFIG.MAX_VOLUME;
+    master.channelCount = 2;
+    master.channelCountMode = 'explicit';
+    limiter = ctx.createWaveShaper();
+    var n = 2048, curve = new Float32Array(n), L = CONFIG.PEAK_LIMIT;
+    for (var i = 0; i < n; i++) {
+      var x = (i / (n - 1)) * 2 - 1;
+      curve[i] = L * Math.tanh(x / L);
+    }
+    limiter.curve = curve;
+    master.connect(limiter);
+    limiter.connect(ctx.destination);
+    return ctx;
+  }
+
+  function resumeCtx() {
+    var c = getCtx();
+    if (c.state === 'suspended') c.resume();
+  }
+
+  /* Measures the recording and works out the gain that evens it out. */
+  function measureLevel(buf) {
+    var sum = 0, count = 0, peak = 0;
+    for (var ch = 0; ch < buf.numberOfChannels; ch++) {
+      var d = buf.getChannelData(ch);
+      for (var i = 0; i < d.length; i += 4) {
+        var v = Math.abs(d[i]);
+        if (v > peak) peak = v;
+        // ignore near-silence so pauses don't fool the measurement
+        if (v > 0.003) { sum += v * v; count++; }
+      }
+    }
+    var rms = count ? Math.sqrt(sum / count) : 0;
+    if (!rms || !peak) return 1;
+    var g = CONFIG.SPEECH_LEVEL / rms;
+    return Math.min(g, 0.9 / peak);
+  }
+
+  function useArrayBuffer(arr, source) {
+    var c = getCtx();
+    return new Promise(function (resolve, reject) {
+      c.decodeAudioData(arr, resolve, reject);
+    }).then(function (buf) {
+      speechBuffer = buf;
+      speechLevel = measureLevel(buf);
+      audioStatus = 'ready';
+      audioSource = source;
+      updateAudioUI();
+    });
+  }
+
+  function loadAudio() {
+    audioStatus = 'loading';
+    updateAudioUI();
+    // The single-file version (hearing-station.html) carries the recording inside it.
+    if (window.EMBEDDED_SPEECH) {
+      var bin = atob(window.EMBEDDED_SPEECH), bytes = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      useArrayBuffer(bytes.buffer, 'file').catch(function () { audioStatus = 'error'; updateAudioUI(); });
+      return;
+    }
+    fetch(CONFIG.AUDIO_FILE)
+      .then(function (r) { if (!r.ok) throw new Error('not found'); return r.arrayBuffer(); })
+      .then(function (arr) { return useArrayBuffer(arr, 'file'); })
+      .catch(function () {
+        // Not found (or page opened from the tablet's storage): try the file
+        // chosen earlier with "Choose audio file".
+        return dbGet().then(function (blob) {
+          if (!blob) throw new Error('none');
+          return blob.arrayBuffer().then(function (arr) { return useArrayBuffer(arr, 'chosen'); });
+        }).catch(function () {
+          audioStatus = 'missing';
+          updateAudioUI();
+        });
+      });
+  }
+
+  function chooseAudio() { $('#audioFileInput').click(); }
+
+  function onFileChosen(e) {
+    var file = e.target.files && e.target.files[0];
+    e.target.value = '';
+    if (!file) return;
+    file.arrayBuffer()
+      .then(function (arr) { return useArrayBuffer(arr, 'chosen'); })
+      .then(function () { dbPut(file); })
+      .catch(function () { audioStatus = 'error'; updateAudioUI(); });
+  }
+
+  /* Remembers the chosen file on the tablet (IndexedDB). */
+  function dbOpen() {
+    return new Promise(function (resolve, reject) {
+      try {
+        var req = indexedDB.open('hearing-station', 1);
+        req.onupgradeneeded = function () { req.result.createObjectStore('files'); };
+        req.onsuccess = function () { resolve(req.result); };
+        req.onerror = function () { reject(req.error); };
+      } catch (err) { reject(err); }
+    });
+  }
+  function dbPut(blob) {
+    return dbOpen().then(function (db) {
+      return new Promise(function (resolve) {
+        var tx = db.transaction('files', 'readwrite');
+        tx.objectStore('files').put(blob, 'speech');
+        tx.oncomplete = resolve; tx.onerror = resolve;
+      });
+    }).catch(function () { /* storage not available – fine */ });
+  }
+  function dbGet() {
+    return dbOpen().then(function (db) {
+      return new Promise(function (resolve) {
+        var req = db.transaction('files').objectStore('files').get('speech');
+        req.onsuccess = function () { resolve(req.result || null); };
+        req.onerror = function () { resolve(null); };
+      });
+    });
+  }
+
+  function updateAudioUI() {
+    var ready = audioStatus === 'ready';
+    $('#playerControls').hidden = !ready && audioStatus !== 'loading';
+    $('#playBtn').disabled = !ready;
+    $('#audioMissingBox').hidden = (audioStatus !== 'missing' && audioStatus !== 'error');
+    $('#audioMissingMsg').textContent = audioStatus === 'error' ? t('audioError') : t('audioMissing');
+    var admin = $('#audioAdminStatus');
+    admin.textContent = ready ? '✓ ' + t('audioReady') :
+                        audioStatus === 'loading' ? t('audioLoading') : t('audioMissing');
+    // "Change audio file" link only matters when the file was picked by hand
+    // or is missing; with speech.mp3 next to the page it is not needed.
+    $('.audio-admin .link-btn').hidden = (audioSource === 'file' && ready);
+    if (!play) updateStatusLabel();
+    fitText();
+  }
+
+  /* ---------- condition effects ----------
+     Each builder connects input (mono speech) to out (condition bus) and
+     returns { update(params), stop() }. */
+
+  function filter(type, freq, gainDb, q) {
+    var f = ctx.createBiquadFilter();
+    f.type = type;
+    f.frequency.value = freq;
+    if (gainDb != null) f.gain.value = gainDb;
+    if (q != null) f.Q.value = q;
+    return f;
+  }
+  function gain(v) { var g = ctx.createGain(); g.gain.value = v; return g; }
+  function tone(type, freq) { var o = ctx.createOscillator(); o.type = type; o.frequency.value = freq; return o; }
+  function smooth(param, value) { param.setTargetAtTime(value, ctx.currentTime, 0.08); }
+
+  function noiseSource() {
+    var len = ctx.sampleRate * 2, buf = ctx.createBuffer(1, len, ctx.sampleRate), d = buf.getChannelData(0);
+    for (var i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    var s = ctx.createBufferSource();
+    s.buffer = buf; s.loop = true;
+    return s;
+  }
+
+  function chain(nodes) { for (var i = 0; i < nodes.length - 1; i++) nodes[i].connect(nodes[i + 1]); }
+
+  var BUILDERS = {
+    /* Age-related: progressive high-frequency loss */
+    presby: function (input, out) {
+      // [shelf above 1 kHz, above 2 kHz, above 4 kHz, low-pass Hz, overall dB]
+      var PRESETS = [
+        [-4, -6, -8, 7000, -1],    // mild
+        [-6, -10, -14, 4500, -2],  // moderate
+        [-10, -14, -18, 2500, -4]  // severe
+      ];
+      var s1 = filter('highshelf', 1000, 0), s2 = filter('highshelf', 2000, 0), s3 = filter('highshelf', 4000, 0);
+      var lp = filter('lowpass', 8000, null, 0.7), g = gain(1);
+      chain([input, s1, s2, s3, lp, g, out]);
+      function update(p, instant) {
+        var v = PRESETS[p.severity] || PRESETS[1];
+        var set = instant ? function (prm, x) { prm.value = x; } : smooth;
+        set(s1.gain, v[0]); set(s2.gain, v[1]); set(s3.gain, v[2]);
+        set(lp.frequency, v[3]); set(g.gain, dbToGain(v[4]));
+      }
+      return { update: update, stop: function () {} };
+    },
+
+    /* Noise-induced: notch around 4 kHz + mild high loss + soft 4 kHz ringing */
+    noise: function (input, out) {
+      var notch = filter('peaking', 4000, -28, 1.1);
+      var hs = filter('highshelf', 2000, -5);
+      chain([input, hs, notch, out]);
+      var ring = tone('sine', 4000), rg = gain(CONFIG.NOISE_RING_LEVEL);
+      chain([ring, rg, out]);
+      ring.start();
+      return { update: function () {}, stop: function () { try { ring.stop(); } catch (e) {} } };
+    },
+
+    /* Tinnitus: normal speech + a phantom sound on top */
+    tinn: function (input, out) {
+      input.connect(out);
+      var ring = tone('sine', 6000), ringG = gain(0);
+      chain([ring, ringG, out]);
+      var buzz = tone('sawtooth', 150), buzzLp = filter('lowpass', 900, null, 0.7), buzzG = gain(0);
+      chain([buzz, buzzLp, buzzG, out]);
+      var hiss = noiseSource(), hissHp = filter('highpass', 2500, null, 0.7), hissLp = filter('lowpass', 9000, null, 0.7), hissG = gain(0);
+      chain([hiss, hissHp, hissLp, hissG, out]);
+      ring.start(); buzz.start(); hiss.start();
+      function update(p) {
+        smooth(ringG.gain, p.sound === 'ring' ? CONFIG.TINNITUS.ring : 0);
+        smooth(buzzG.gain, p.sound === 'buzz' ? CONFIG.TINNITUS.buzz : 0);
+        smooth(hissG.gain, p.sound === 'hiss' ? CONFIG.TINNITUS.hiss : 0);
+      }
+      return { update: update, stop: function () { [ring, buzz, hiss].forEach(function (n) { try { n.stop(); } catch (e) {} }); } };
+    },
+
+    /* Acoustic neuroma: LEFT ear quieter + high-frequency loss + soft ringing;
+       right ear unchanged. */
+    neuro: function (input, out) {
+      // stage 0 (early) .. 4 (late): [left level dB, shelf 1.5k dB, shelf 3k dB, low-pass Hz, ringing]
+      var PRESETS = [
+        [-4, -3, -6, 9000, 0.003],
+        [-9, -6, -10, 6000, 0.005],
+        [-15, -9, -15, 4000, 0.007],
+        [-22, -12, -20, 2500, 0.009],
+        [-30, -15, -25, 1500, 0.011]
+      ];
+      var merger = ctx.createChannelMerger(2);
+      // Right ear (input 1): unchanged
+      input.connect(merger, 0, 1);
+      // Left ear (input 0): reduced and muffled
+      var s1 = filter('highshelf', 1500, 0), s2 = filter('highshelf', 3000, 0), lp = filter('lowpass', 9000, null, 0.7), gl = gain(1);
+      chain([input, s1, s2, lp, gl]);
+      gl.connect(merger, 0, 0);
+      // soft ringing, left ear only
+      var ring = tone('sine', 4500), rg = gain(0);
+      chain([ring, rg]);
+      rg.connect(merger, 0, 0);
+      merger.connect(out);
+      ring.start();
+      function update(p, instant) {
+        var v = PRESETS[p.stage] || PRESETS[2];
+        var set = instant ? function (prm, x) { prm.value = x; } : smooth;
+        set(gl.gain, dbToGain(v[0])); set(s1.gain, v[1]); set(s2.gain, v[2]);
+        set(lp.frequency, v[3]); set(rg.gain, v[4]);
+      }
+      return { update: update, stop: function () { try { ring.stop(); } catch (e) {} } };
+    }
+  };
+
+  function startPlayback() {
+    if (!speechBuffer || !state.cond) return;
+    resumeCtx();
+    stopPlayback();
+
+    var src = ctx.createBufferSource();
+    src.buffer = speechBuffer;
+    var level = gain(speechLevel);
+    // force mono so both ears get the same speech
+    var mono = ctx.createGain();
+    mono.channelCount = 1;
+    mono.channelCountMode = 'explicit';
+    mono.channelInterpretation = 'speakers';
+    var normalBus = gain(1), condBus = gain(0);
+    chain([src, level, mono, normalBus, master]);
+    condBus.connect(master);
+
+    var effect = BUILDERS[state.cond](mono, condBus);
+    effect.update(state.params, true);
+
+    play = {
+      src: src, effect: effect, normalBus: normalBus, condBus: condBus,
+      nodes: [src, level, mono, normalBus, condBus],
+      start: ctx.currentTime, duration: speechBuffer.duration,
+      mode: 'normal', userToggled: false, autoSwitched: false, raf: 0
+    };
+    src.onended = function () { if (play && play.src === src) finishPlayback(); };
+    src.start();
+
+    $('#playBtn').classList.add('playing');
+    $('#playBtnText').textContent = t('stop');
+    $('#modeToggle').setAttribute('data-disabled', 'false');
+    $('#todoBox').classList.remove('highlight');
+    $('#progressMark').style.left = Math.min(100, CONFIG.NORMAL_SECONDS / play.duration * 100) + '%';
+    updateMode();
+    tick();
+  }
+
+  function setMode(mode, fadeSeconds) {
+    if (!play || play.mode === mode) return;
+    play.mode = mode;
+    var now = ctx.currentTime, end = now + fadeSeconds;
+    [[play.normalBus, mode === 'normal' ? 1 : 0], [play.condBus, mode === 'cond' ? 1 : 0]].forEach(function (pair) {
+      var g = pair[0].gain;
+      g.cancelScheduledValues(now);
+      g.setValueAtTime(g.value, now);
+      g.linearRampToValueAtTime(pair[1], end);
+    });
+    updateMode();
+  }
+
+  function tick() {
+    if (!play) return;
+    var elapsed = ctx.currentTime - play.start;
+    if (!play.userToggled && !play.autoSwitched && elapsed >= CONFIG.NORMAL_SECONDS) {
+      play.autoSwitched = true;
+      setMode('cond', CONFIG.AUTO_FADE_SECONDS);
+    }
+    $('#progressFill').style.width = Math.min(100, elapsed / play.duration * 100) + '%';
+    play.raf = requestAnimationFrame(tick);
+  }
+
+  function stopPlayback() {
+    if (!play) return;
+    var p = play;
+    play = null;
+    cancelAnimationFrame(p.raf);
+    p.src.onended = null;
+    try { p.src.stop(); } catch (e) {}
+    p.effect.stop();
+    // tiny fade to avoid a click, then disconnect
+    var now = ctx.currentTime;
+    [p.normalBus, p.condBus].forEach(function (b) { b.gain.cancelScheduledValues(now); b.gain.setTargetAtTime(0, now, 0.02); });
+    setTimeout(function () { p.nodes.forEach(function (n) { try { n.disconnect(); } catch (e) {} }); }, 200);
+    resetPlayerUI();
+  }
+
+  function finishPlayback() {
+    stopPlayback();
+    $('#playBtnText').textContent = t('playAgain');
+    $('#progressFill').style.width = '100%';
+    var todo = $('#todoBox');
+    todo.classList.remove('highlight');
+    void todo.offsetWidth; // restart the animation
+    todo.classList.add('highlight');
+  }
+
+  function resetPlayerUI() {
+    $('#playBtn').classList.remove('playing');
+    $('#playBtnText').textContent = t('play');
+    $('#modeToggle').setAttribute('data-disabled', 'true');
+    $('#progressFill').style.width = '0';
+    $('#todoBox').classList.remove('highlight');
+    updateMode();
+  }
+
+  function updateMode() {
+    var mode = play ? play.mode : null;
+    $$('#modeToggle button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-mode') === mode); });
+    updateStatusLabel();
+  }
+
+  function updateStatusLabel() {
+    var el = $('#statusLabel');
+    el.classList.remove('normal', 'cond');
+    if (play) {
+      if (play.mode === 'normal') { el.textContent = t('labelNormal'); el.classList.add('normal'); }
+      else { el.textContent = t('labelWith').replace('{name}', state.cond ? t(state.cond + 'Short').toUpperCase() : ''); el.classList.add('cond'); }
+    } else {
+      el.textContent = audioStatus === 'loading' ? t('audioLoading') : t('labelReady');
+      if (audioStatus === 'ready') {
+        var hint = document.createElement('small');
+        hint.textContent = t('pressPlayHint');
+        el.appendChild(hint);
+      }
+    }
+  }
+
+  function setParam(name, value) {
+    state.params[name] = value;
+    syncChoiceButtons();
+    if (play) play.effect.update(state.params);
+  }
+
+  /* Left/right headphone check: short beep left, then right. */
+  function lrTest() {
+    resumeCtx();
+    var flash = $('#lrFlash');
+    [[-1, 'left', 'lrLeft', 0], [1, 'right', 'lrRight', 0.9]].forEach(function (s) {
+      var at = ctx.currentTime + s[3];
+      var o = tone('sine', 660), g = gain(0), pan = ctx.createStereoPanner();
+      pan.pan.value = s[0];
+      chain([o, g, pan, master]);
+      g.gain.setValueAtTime(0, at);
+      g.gain.linearRampToValueAtTime(0.08, at + 0.03);
+      g.gain.setValueAtTime(0.08, at + 0.55);
+      g.gain.linearRampToValueAtTime(0, at + 0.6);
+      o.start(at); o.stop(at + 0.65);
+      o.onended = function () { pan.disconnect(); };
+      setTimeout(function () {
+        flash.textContent = (s[1] === 'left' ? '◀ ' : '') + t(s[2]) + (s[1] === 'right' ? ' ▶' : '');
+        flash.className = 'lr-flash ' + s[1];
+        flash.hidden = false;
+      }, s[3] * 1000);
+    });
+    setTimeout(function () { flash.hidden = true; }, 1700);
+  }
+
+  /* ------------------------------------------------------------------
+     Inactivity timer, full screen, screen wake lock
+     ------------------------------------------------------------------ */
+  function touched() { state.lastTouch = Date.now(); }
+
+  function checkIdle() {
+    if (state.screen === 'home') return;
+    if (Date.now() - state.lastTouch > CONFIG.IDLE_SECONDS * 1000) goHome();
+  }
+
+  var wakeLock = null;
+  function keepAwake() {
+    if (!('wakeLock' in navigator) || wakeLock) return;
+    navigator.wakeLock.request('screen').then(function (l) {
+      wakeLock = l;
+      l.addEventListener('release', function () { wakeLock = null; });
+    }).catch(function () {});
+  }
+
+  function goFullscreen() {
+    if (!CONFIG.FULLSCREEN || document.fullscreenElement) return;
+    var el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen().catch(function () {});
+  }
+
+  /* ------------------------------------------------------------------
+     Wire up
+     ------------------------------------------------------------------ */
+  function init() {
+    try { var saved = localStorage.getItem('hearing-lang'); if (saved && T[saved]) state.lang = saved; } catch (e) {}
+
+    drawCochlea();
+    applyLanguage();
+
+    document.addEventListener('click', function (e) {
+      var go = e.target.closest('[data-go]');
+      if (go) {
+        var target = go.getAttribute('data-go');
+        if (target === 'home') goHome(); else show(target);
+        return;
+      }
+      var lang = e.target.closest('[data-lang]');
+      if (lang) { setLanguage(lang.getAttribute('data-lang')); return; }
+      var cond = e.target.closest('[data-cond]');
+      if (cond) { openCondition(cond.getAttribute('data-cond')); return; }
+      var act = e.target.closest('[data-action="choose-audio"]');
+      if (act) { chooseAudio(); return; }
+      var choice = e.target.closest('.choice button');
+      if (choice) {
+        var p = choice.parentNode.getAttribute('data-param');
+        var v = choice.getAttribute('data-value');
+        setParam(p, p === 'severity' ? parseInt(v, 10) : v);
+        return;
+      }
+      var modeBtn = e.target.closest('#modeToggle button');
+      if (modeBtn && play) {
+        play.userToggled = true;
+        setMode(modeBtn.getAttribute('data-mode'), CONFIG.TOGGLE_FADE_SECONDS);
+      }
+    });
+
+    $('#ackBox').addEventListener('change', updateAck);
+    $('#ackContinue').addEventListener('click', openHearWHO);
+    $('#playBtn').addEventListener('click', function () { if (play) stopPlayback(); else startPlayback(); });
+    $('#stageSlider').addEventListener('input', function (e) { setParam('stage', parseInt(e.target.value, 10)); });
+    $('#lrTestBtn').addEventListener('click', lrTest);
+    $('#audioFileInput').addEventListener('change', onFileChosen);
+
+    ['pointerdown', 'touchstart', 'keydown', 'input'].forEach(function (ev) {
+      document.addEventListener(ev, touched, { passive: true, capture: true });
+    });
+    document.addEventListener('pointerdown', function () { resumeCtx(); goFullscreen(); keepAwake(); }, { capture: true });
+    setInterval(checkIdle, 1000);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'visible') checkIdle();
+      else stopPlayback();
+    });
+    window.addEventListener('resize', fitText);
+    // stop the long-press menu / text selection on the kiosk
+    document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+
+    loadAudio();
+
+    // Offline support when the page is served over https (e.g. GitHub Pages)
+    if ('serviceWorker' in navigator && location.protocol === 'https:') {
+      navigator.serviceWorker.register('sw.js').catch(function () {});
+    }
+  }
+
+  window.HEARING_APP_OK = true;
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+
+</script>
+<script>
+  if (!window.TEXT || !window.HEARING_APP_OK) {
+    document.getElementById('loadError').hidden = false;
+    document.getElementById('app').hidden = true;
+  }
+</script>
+</body>
+</html>

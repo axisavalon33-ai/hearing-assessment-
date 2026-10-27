@@ -1,0 +1,21 @@
+# Rebuilds hearing-station.html (the single-file tablet version) whenever
+# the page, the texts or speech.mp3 change on GitHub.
+name: Build single-file version
+on:
+  push:
+    paths: ['index.html', 'texts.js', 'app.js', 'style.css', 'icon.svg', 'speech.mp3', 'build.py']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 build.py
+      - name: Commit the rebuilt file
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898333+github-actions[bot]@users.noreply.github.com"
+          git add hearing-station.html
+          git diff --cached --quiet || (git commit -m "Rebuild hearing-station.html" && git push)

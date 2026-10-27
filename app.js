@@ -259,6 +259,13 @@
   function loadAudio() {
     audioStatus = 'loading';
     updateAudioUI();
+    // The single-file version (hearing-station.html) carries the recording inside it.
+    if (window.EMBEDDED_SPEECH) {
+      var bin = atob(window.EMBEDDED_SPEECH), bytes = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      useArrayBuffer(bytes.buffer, 'file').catch(function () { audioStatus = 'error'; updateAudioUI(); });
+      return;
+    }
     fetch(CONFIG.AUDIO_FILE)
       .then(function (r) { if (!r.ok) throw new Error('not found'); return r.arrayBuffer(); })
       .then(function (arr) { return useArrayBuffer(arr, 'file'); })

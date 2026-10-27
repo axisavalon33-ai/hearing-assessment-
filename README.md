@@ -58,9 +58,9 @@ The app evens it out and caps the volume.
 The conditions list page shows a small line at the bottom right, e.g.
 `English ✓ · සිංහල ✓ · தமிழ் ✓`, so you can check which recordings were found.
 
-**Uploading to GitHub:** open the repository on github.com → make sure the
-branch drop-down (top left) shows the branch with these files → **Add file →
-Upload files** → drag the files in → **Commit changes**.
+**Uploading to GitHub:** open **axisavalon33-ai/hearing-assessment-** on
+github.com (branch **main**) → **Add file → Upload files** → drag the files
+in → **Commit changes**.
 
 ## 3. Install hearWHO first
 
@@ -76,28 +76,33 @@ not installed, the button opens its Play Store page instead.
 ## 4. Put the web app online, then install it on the tablet
 
 The app needs to be on a web address (https) **once**, so the tablet can
-install it. After that it runs offline from the tablet. Pick one way to host it:
+install it. After that it runs offline from the tablet.
 
-### Way 1 – Netlify (free, works with a private repository) – recommended
+### Way 1 – GitHub Pages (free) – recommended
 
-1. Go to **app.netlify.com** and sign up for free (you can sign up with your GitHub account).
-2. Click **Add new site → Import an existing project → GitHub**, allow
-   access, and choose the **hearing-test** repository.
-3. For **Branch to deploy**, choose the branch with your files. The other
-   settings are read from `netlify.toml`, so leave them as they are. Click **Deploy**.
-4. After a minute you get an address like `https://something.netlify.app`.
-   (You can rename it under *Site configuration → Change site name*.)
-5. From now on, every change you upload to GitHub (new video, new
-   recordings, edited `texts.js`) updates the site automatically.
+1. On github.com, open **axisavalon33-ai/hearing-assessment-** → **Settings** → **Pages** (left menu).
+2. Under *Build and deployment*, set **Source** to **Deploy from a branch**.
+   Set **Branch** to **main** and the folder to **/ (root)**, then click **Save**.
+3. Wait 1–2 minutes and refresh that page. The address appears at the top:
 
-### Way 2 – GitHub Pages (free only if the repository is public)
+   **https://axisavalon33-ai.github.io/hearing-assessment-/**
 
-GitHub Pages on a **private** repository needs a paid GitHub plan. If you're
-happy to make the repository public (anyone could then see the files,
-including the voice recordings), go to **Settings → General → Danger Zone →
-Change visibility → Public**. Then **Settings → Pages** → *Deploy from a
-branch* → pick the branch, folder `/ (root)` → **Save**. The address will be
-`https://axisavalon33-ai.github.io/hearing-test/`.
+4. From now on, every change you upload to GitHub (new video, recordings, an
+   edited `texts.js`) goes live on that address automatically within a minute or two.
+
+> This repository is **public**, so anyone with the link can see the files,
+> including the voice recordings and video. Only use recordings from people
+> who agreed to this.
+
+### Way 2 – Netlify (if you ever make the repository private)
+
+1. Go to **app.netlify.com** and sign up for free with your GitHub account.
+2. Click **Add new site → Import an existing project → GitHub** and choose
+   the **hearing-assessment-** repository.
+3. For **Branch to deploy**, choose **main**. The other settings are read
+   from `netlify.toml`, so leave them as they are. Click **Deploy**.
+4. You get an address like `https://something.netlify.app`, which updates
+   automatically after every upload to GitHub.
 
 ### Install it on the tablet
 

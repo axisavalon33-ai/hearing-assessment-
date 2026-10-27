@@ -74,6 +74,8 @@ button:disabled { cursor: default; }
 }
 .intro.has-video .intro-video { opacity: 1; }
 .intro.has-video .intro-fallback { display: none; }
+/* the exhibition name is already in the video */
+.intro.has-video .intro-top { display: none; }
 .intro-shade {
   position: absolute; inset: 0;
   background:
@@ -122,11 +124,11 @@ button:disabled { cursor: default; }
   text-shadow: 0 .2rem 1.2rem rgba(0, 0, 0, .6);
 }
 .intro-title span + span::before { content: "·"; margin-right: 1.6rem; color: var(--primary); }
-.intro-prompt span + span::before { content: "·"; margin-right: 1.4rem; opacity: .6; }
 .intro-prompt {
   margin: 0;
-  display: flex; flex-wrap: wrap; justify-content: center; gap: .2rem 1.4rem;
-  font-size: 1.4rem; color: #d6e7f1;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: .2rem 2.4rem;
+  font-size: 1.25rem; color: #d6e7f1; white-space: nowrap;
+  text-shadow: 0 .1rem .6rem rgba(0, 0, 0, .7);
   animation: breathe 2.6s ease-in-out infinite;
 }
 @keyframes breathe { 50% { opacity: .55; } }

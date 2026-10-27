@@ -12,7 +12,7 @@ needs no internet.
 | `texts.js` | **All on-screen text** in English, Sinhala and Tamil. Edit translations here. |
 | `style.css` | Colours and layout. |
 | `app.js` | How it works, plus the sound processing. Settings are at the top (see below). |
-| `speech.mp3` | **You add this:** your speech recording. |
+| `speech-en.mp3`, `speech-si.mp3`, `speech-ta.mp3` | **You add these:** one speech recording per language. |
 | `hearing-station.html` | **The single-file version for the tablet** (Option A). Made automatically. Don't edit it. |
 | `build.py`, `.github/workflows/build.yml` | Rebuild `hearing-station.html`. GitHub runs this for you. |
 | `sw.js`, `manifest.webmanifest`, `icon.svg` | Only used for the online-hosting option (Option B). They do no harm otherwise. |
@@ -21,17 +21,33 @@ Keep all the files together in one folder, named `hearing`.
 
 ## 1. Add your speech recording
 
-1. Record a person speaking with a little background noise, about 15–20 seconds long.
-2. Save it as an **MP3** file named exactly `speech.mp3` (all lowercase).
-3. Put it in the `hearing` folder, next to `index.html`.
+Make one recording per language. Each should be a person speaking with a
+little background noise, about 15–20 seconds long. Name them exactly
+(all lowercase):
+
+| Language | File name |
+|---|---|
+| English | `speech-en.mp3` |
+| Sinhala | `speech-si.mp3` |
+| Tamil | `speech-ta.mp3` |
+
+Phone recordings saved as **.m4a** work too. Just rename them the same way, e.g.
+`speech-ta.m4a`. The page plays the recording that matches the language the
+visitor chose. If one language has no recording yet, it plays another
+language's recording instead. (A single file named `speech.mp3` also still
+works for all languages.)
 
 You don't need to worry about how loud the recording is. The page evens out the
 loudness and caps the maximum volume.
 
-If the page can't find `speech.mp3`, a condition page shows a
-**"Choose audio file"** button. Tap it and pick the recording from the tablet.
-With Option A, the easiest way is to upload `speech.mp3` to GitHub so it is
-built into the single file (see below).
+If the page finds no recording at all, a condition page shows a
+**"Choose audio file"** button. Tap it and pick a recording from the tablet.
+It is used for the language currently selected. With Option A, the easiest
+way is to upload the recordings to GitHub so they are built into the single
+file (see below).
+
+The conditions list page shows a small line at the bottom right, e.g.
+`English ✓ · සිංහල ✓ · தமிழ் ✗`, so you can check which recordings were found.
 
 ## 2. Install hearWHO first
 
@@ -55,15 +71,16 @@ that one file. Nothing else needs to be next to it.
 
 **Step 1 – get the file with your recording inside**
 
-1. On github.com, open this repository and upload your `speech.mp3`
-   (**Add file → Upload files**, then **Commit changes**).
+1. On github.com, open this repository and upload your three recordings
+   (**Add file → Upload files**, drag in all three files at once, then
+   **Commit changes**).
 2. Wait about a minute. GitHub automatically rebuilds `hearing-station.html`
-   with the recording inside it (you can watch this under the **Actions** tab).
+   with the recordings inside it (you can watch this under the **Actions** tab).
    The same happens whenever you edit `texts.js` on GitHub.
 3. Click `hearing-station.html` → the **⋯** menu (or the download icon) →
    **Download**.
 
-(If you skip uploading `speech.mp3`, the file still works. Visitors will see
+(If you skip uploading the recordings, the file still works. Visitors will see
 "Choose audio file" and you pick the recording on the tablet each time the
 page is opened.)
 
@@ -88,7 +105,7 @@ page is opened.)
 This uses free GitHub Pages hosting. The tablet only needs internet the first
 time it opens the page.
 
-1. Make sure `speech.mp3` is uploaded into this repository next to `index.html`.
+1. Make sure your recordings are uploaded into this repository next to `index.html`.
 2. On github.com, open the repository → **Settings** → **Pages**. Under
    *Build and deployment*, choose **Deploy from a branch**, select the
    branch that has these files, folder `/ (root)`, and click **Save**. (Pages on a private
@@ -152,4 +169,4 @@ speaker review it, especially the medical terms.
   high frequencies, with soft ringing on the left. The right ear stays normal.
   The Early → Late slider makes it worse.
 
-All effects are made live from the one `speech.mp3` with the Web Audio API.
+All effects are made live from the one recording (for the chosen language) with the Web Audio API.

@@ -1,8 +1,9 @@
 /* Offline support – only used when the page is served over https
    (for example GitHub Pages). Opening the files directly from the tablet
    does not use this file. */
-var CACHE = 'hearing-station-v1';
-var FILES = ['./', 'index.html', 'style.css', 'texts.js', 'app.js', 'icon.svg', 'manifest.webmanifest', 'speech.mp3'];
+var CACHE = 'hearing-station-v2';
+var FILES = ['./', 'index.html', 'style.css', 'texts.js', 'app.js', 'icon.svg', 'manifest.webmanifest',
+  'speech-en.mp3', 'speech-si.mp3', 'speech-ta.mp3', 'speech-en.m4a', 'speech-si.m4a', 'speech-ta.m4a', 'speech.mp3'];
 
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(CACHE).then(function (c) {

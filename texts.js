@@ -107,7 +107,7 @@ window.TEXT = {
     dTumour: "Tumour",
 
     audioLoading: "Loading sound…",
-    audioMissing: "The speech recording (speech.mp3) was not found.",
+    audioMissing: "The speech recording was not found.",
     chooseFile: "Choose audio file",
     audioError: "This file could not be played. Please try an MP3 file.",
     changeAudio: "Change audio file",
@@ -206,7 +206,7 @@ window.TEXT = {
     dTumour: "ගෙඩිය",
 
     audioLoading: "ශබ්දය පූරණය වෙමින්…",
-    audioMissing: "කතා පටිගත කිරීම (speech.mp3) හමු නොවීය.",
+    audioMissing: "කතා පටිගත කිරීම හමු නොවීය.",
     chooseFile: "ශ්‍රව්‍ය ගොනුවක් තෝරන්න",
     audioError: "මෙම ගොනුව වාදනය කළ නොහැක. කරුණාකර MP3 ගොනුවක් උත්සාහ කරන්න.",
     changeAudio: "ශ්‍රව්‍ය ගොනුව වෙනස් කරන්න",
@@ -305,7 +305,7 @@ window.TEXT = {
     dTumour: "கட்டி",
 
     audioLoading: "ஒலி ஏற்றப்படுகிறது…",
-    audioMissing: "பேச்சுப் பதிவு (speech.mp3) கிடைக்கவில்லை.",
+    audioMissing: "பேச்சுப் பதிவு கிடைக்கவில்லை.",
     chooseFile: "ஒலிக் கோப்பைத் தேர்ந்தெடுங்கள்",
     audioError: "இந்தக் கோப்பை இயக்க முடியவில்லை. MP3 கோப்பை முயற்சிக்கவும்.",
     changeAudio: "ஒலிக் கோப்பை மாற்று",

@@ -23,7 +23,11 @@
     IDLE_SECONDS: 60,       // no touch for this long -> back to home
     FULLSCREEN: true,       // go full screen on first touch
 
-    AUDIO_FILE: 'speech.mp3',
+    // Recording names: speech-en.mp3, speech-si.mp3, speech-ta.mp3
+    // (.m4a also works). A single speech.mp3 is used for any language
+    // that has no recording of its own.
+    AUDIO_LANGS: ['en', 'si', 'ta'],
+    AUDIO_EXTS: ['mp3', 'm4a'],
     HEARWHO_LINK: 'intent://#Intent;package=com.hearxgroup.hearwho;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.hearxgroup.hearwho;end',
 
     // Tinnitus sound levels (kept well below the speech).
@@ -195,9 +199,10 @@
      The two buses are cross-faded to switch between normal and condition.
      ------------------------------------------------------------------ */
   var ctx = null, master = null, limiter = null;
-  var speechBuffer = null, speechLevel = 1;
+  // One recording per language: speech-en / speech-si / speech-ta (.mp3 or .m4a).
+  // 'any' is the older single speech.mp3, used for languages without their own.
+  var speech = {};             // lang -> { buffer, level, source }
   var audioStatus = 'loading'; // loading | ready | missing | error
-  var audioSource = '';        // 'file' (speech.mp3) or 'chosen'
   var play = null;             // the current playback, or null
 
   function getCtx() {
@@ -243,54 +248,72 @@
     return Math.min(g, 0.9 / peak);
   }
 
-  function useArrayBuffer(arr, source) {
+  function decode(arr) {
     var c = getCtx();
-    return new Promise(function (resolve, reject) {
-      c.decodeAudioData(arr, resolve, reject);
-    }).then(function (buf) {
-      speechBuffer = buf;
-      speechLevel = measureLevel(buf);
-      audioStatus = 'ready';
-      audioSource = source;
-      updateAudioUI();
+    return new Promise(function (resolve, reject) { c.decodeAudioData(arr, resolve, reject); });
+  }
+
+  function store(key, arr, source) {
+    return decode(arr).then(function (buf) {
+      speech[key] = { buffer: buf, level: measureLevel(buf), source: source };
     });
+  }
+
+  /* The recording for the current language, or the best substitute. */
+  function currentSpeech() {
+    var order = [state.lang, 'any'].concat(CONFIG.AUDIO_LANGS);
+    for (var i = 0; i < order.length; i++) if (speech[order[i]]) return speech[order[i]];
+    return null;
+  }
+
+  function fetchFirst(names) {
+    if (!names.length) return Promise.reject(new Error('not found'));
+    return fetch(names[0])
+      .then(function (r) { if (!r.ok) throw new Error('not found'); return r.arrayBuffer(); })
+      .catch(function () { return fetchFirst(names.slice(1)); });
+  }
+
+  function loadOne(key) {
+    var base = key === 'any' ? 'speech' : 'speech-' + key;
+    // 1. built into the single-file version (hearing-station.html)
+    var embedded = window.EMBEDDED_SPEECH && window.EMBEDDED_SPEECH[key];
+    if (embedded) {
+      var bin = atob(embedded), bytes = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return store(key, bytes.buffer, 'file').catch(function () {});
+    }
+    // 2. a file next to the page, 3. a file chosen earlier on this tablet
+    return fetchFirst(CONFIG.AUDIO_EXTS.map(function (ext) { return base + '.' + ext; }))
+      .then(function (arr) { return store(key, arr, 'file'); })
+      .catch(function () {
+        return dbGet(base).then(function (blob) {
+          if (!blob) return;
+          return blob.arrayBuffer().then(function (arr) { return store(key, arr, 'chosen'); });
+        });
+      })
+      .catch(function () {});
   }
 
   function loadAudio() {
     audioStatus = 'loading';
     updateAudioUI();
-    // The single-file version (hearing-station.html) carries the recording inside it.
-    if (window.EMBEDDED_SPEECH) {
-      var bin = atob(window.EMBEDDED_SPEECH), bytes = new Uint8Array(bin.length);
-      for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-      useArrayBuffer(bytes.buffer, 'file').catch(function () { audioStatus = 'error'; updateAudioUI(); });
-      return;
-    }
-    fetch(CONFIG.AUDIO_FILE)
-      .then(function (r) { if (!r.ok) throw new Error('not found'); return r.arrayBuffer(); })
-      .then(function (arr) { return useArrayBuffer(arr, 'file'); })
-      .catch(function () {
-        // Not found (or page opened from the tablet's storage): try the file
-        // chosen earlier with "Choose audio file".
-        return dbGet().then(function (blob) {
-          if (!blob) throw new Error('none');
-          return blob.arrayBuffer().then(function (arr) { return useArrayBuffer(arr, 'chosen'); });
-        }).catch(function () {
-          audioStatus = 'missing';
-          updateAudioUI();
-        });
-      });
+    Promise.all(CONFIG.AUDIO_LANGS.concat('any').map(loadOne)).then(function () {
+      audioStatus = currentSpeech() ? 'ready' : 'missing';
+      updateAudioUI();
+    });
   }
 
   function chooseAudio() { $('#audioFileInput').click(); }
 
+  /* A file picked by hand is used for the language currently selected. */
   function onFileChosen(e) {
     var file = e.target.files && e.target.files[0];
     e.target.value = '';
     if (!file) return;
+    var lang = state.lang;
     file.arrayBuffer()
-      .then(function (arr) { return useArrayBuffer(arr, 'chosen'); })
-      .then(function () { dbPut(file); })
+      .then(function (arr) { return store(lang, arr, 'chosen'); })
+      .then(function () { audioStatus = 'ready'; updateAudioUI(); dbPut('speech-' + lang, file); })
       .catch(function () { audioStatus = 'error'; updateAudioUI(); });
   }
 
@@ -305,19 +328,19 @@
       } catch (err) { reject(err); }
     });
   }
-  function dbPut(blob) {
+  function dbPut(key, blob) {
     return dbOpen().then(function (db) {
       return new Promise(function (resolve) {
         var tx = db.transaction('files', 'readwrite');
-        tx.objectStore('files').put(blob, 'speech');
+        tx.objectStore('files').put(blob, key);
         tx.oncomplete = resolve; tx.onerror = resolve;
       });
     }).catch(function () { /* storage not available – fine */ });
   }
-  function dbGet() {
+  function dbGet(key) {
     return dbOpen().then(function (db) {
       return new Promise(function (resolve) {
-        var req = db.transaction('files').objectStore('files').get('speech');
+        var req = db.transaction('files').objectStore('files').get(key);
         req.onsuccess = function () { resolve(req.result || null); };
         req.onerror = function () { resolve(null); };
       });
@@ -330,12 +353,12 @@
     $('#playBtn').disabled = !ready;
     $('#audioMissingBox').hidden = (audioStatus !== 'missing' && audioStatus !== 'error');
     $('#audioMissingMsg').textContent = audioStatus === 'error' ? t('audioError') : t('audioMissing');
-    var admin = $('#audioAdminStatus');
-    admin.textContent = ready ? '✓ ' + t('audioReady') :
-                        audioStatus === 'loading' ? t('audioLoading') : t('audioMissing');
-    // "Change audio file" link only matters when the file was picked by hand
-    // or is missing; with speech.mp3 next to the page it is not needed.
-    $('.audio-admin .link-btn').hidden = (audioSource === 'file' && ready);
+    // Small staff line on the list page: which languages have a recording.
+    $('#audioAdminStatus').textContent = audioStatus === 'loading' ? t('audioLoading') :
+      CONFIG.AUDIO_LANGS.map(function (l) { return T[l].languageName + (speech[l] ? ' ✓' : ' ✗'); }).join(' · ');
+    var own = speech[state.lang];
+    $('.audio-admin .link-btn').textContent = t('changeAudio') + ' (' + t('languageName') + ')';
+    $('.audio-admin .link-btn').hidden = !!(own && own.source === 'file');
     if (!play) updateStatusLabel();
     fitText();
   }
@@ -451,13 +474,14 @@
   };
 
   function startPlayback() {
-    if (!speechBuffer || !state.cond) return;
+    var rec = currentSpeech();
+    if (!rec || !state.cond) return;
     resumeCtx();
     stopPlayback();
 
     var src = ctx.createBufferSource();
-    src.buffer = speechBuffer;
-    var level = gain(speechLevel);
+    src.buffer = rec.buffer;
+    var level = gain(rec.level);
     // force mono so both ears get the same speech
     var mono = ctx.createGain();
     mono.channelCount = 1;
@@ -473,7 +497,7 @@
     play = {
       src: src, effect: effect, normalBus: normalBus, condBus: condBus,
       nodes: [src, level, mono, normalBus, condBus],
-      start: ctx.currentTime, duration: speechBuffer.duration,
+      start: ctx.currentTime, duration: rec.buffer.duration,
       mode: 'normal', userToggled: false, autoSwitched: false, raf: 0
     };
     src.onended = function () { if (play && play.src === src) finishPlayback(); };

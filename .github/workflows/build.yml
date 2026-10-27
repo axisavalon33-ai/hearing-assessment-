@@ -3,7 +3,7 @@
 name: Build single-file version
 on:
   push:
-    paths: ['index.html', 'texts.js', 'app.js', 'style.css', 'icon.svg', 'speech*.mp3', 'speech*.m4a', 'build.py']
+    paths: ['index.html', 'texts.js', 'app.js', 'style.css', 'icon.svg', 'speech*.mp3', 'speech*.m4a', 'intro.mp4', 'intro.webm', 'build.py']
   workflow_dispatch:
 permissions:
   contents: write

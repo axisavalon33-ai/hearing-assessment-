@@ -20,7 +20,7 @@
     NORMAL_SECONDS: 5,      // how long the clip plays normally first
     AUTO_FADE_SECONDS: 1.2, // smooth change from normal to condition
     TOGGLE_FADE_SECONDS: 0.25,
-    IDLE_SECONDS: 60,       // no touch for this long -> back to home
+    IDLE_SECONDS: 60,       // no touch for this long -> back to the welcome video
     FULLSCREEN: true,       // go full screen on first touch
 
     // Recording names: speech-en.mp3, speech-si.mp3, speech-ta.mp3
@@ -33,6 +33,9 @@
     // Tinnitus sound levels (kept well below the speech).
     TINNITUS: { ring: 0.012, buzz: 0.05, hiss: 0.045 },
     NOISE_RING_LEVEL: 0.008,  // soft 4 kHz ringing for noise-induced loss
+
+    // Welcome-screen video, next to the page. The first one found is used.
+    VIDEO_FILES: ['intro.mp4', 'intro.webm'],
 
     DEFAULT_LANG: 'en'
   };
@@ -49,7 +52,7 @@
 
   var state = {
     lang: CONFIG.DEFAULT_LANG,
-    screen: 'home',
+    screen: 'intro',
     cond: null,
     params: { severity: 1, sound: 'ring', stage: 2 },
     lastTouch: Date.now()
@@ -66,7 +69,7 @@
   function applyLanguage() {
     document.documentElement.lang = state.lang;
     $$('[data-i18n]').forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
-    $$('.lang-btn').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === state.lang); });
+    renderIntro();
     if (state.cond) renderCondition();
     updateAudioUI();
     fitText();
@@ -75,7 +78,6 @@
   function setLanguage(lang) {
     if (!T[lang]) return;
     state.lang = lang;
-    try { localStorage.setItem('hearing-lang', lang); } catch (e) { /* ignore */ }
     applyLanguage();
   }
 
@@ -100,7 +102,11 @@
   function show(name) {
     if (name !== 'cond') stopPlayback();
     state.screen = name;
+    document.body.setAttribute('data-screen', name);
     $$('.screen').forEach(function (s) { s.classList.toggle('active', s.id === 'screen-' + name); });
+    // the video only plays while the welcome screen is showing
+    var v = $('#introVideo');
+    if (name === 'intro') { if (v.src) v.play().catch(function () {}); } else v.pause();
     if (name === 'ack') { $('#ackBox').checked = false; updateAck(); }
     if (name === 'home' || name === 'list') state.cond = null;
     fitText();
@@ -112,6 +118,76 @@
     show('home');
   }
 
+  /* Back to the welcome video, ready for the next visitor. */
+  function goIntro() {
+    goHome();
+    show('intro');
+  }
+
+  /* ------------------------------------------------------------------
+     Welcome screen: looping video + language choice
+     The titles come from texts.js, shown in all three languages at once.
+     ------------------------------------------------------------------ */
+  function renderIntro() {
+    var langs = ['en', 'si', 'ta'];
+    $('#introTitle').innerHTML = '';
+    $('#introPrompt').innerHTML = '';
+    $('#introLangs').innerHTML = '';
+    langs.forEach(function (l, i) {
+      var title = document.createElement('span');
+      title.lang = l;
+      title.textContent = T[l].sectionTitle;
+      $('#introTitle').appendChild(title);
+
+      var prompt = document.createElement('span');
+      prompt.lang = l;
+      prompt.textContent = T[l].chooseLanguage;
+      $('#introPrompt').appendChild(prompt);
+
+      var b = document.createElement('button');
+      b.className = 'intro-lang';
+      b.setAttribute('data-lang', l);
+      b.lang = l;
+      b.innerHTML = '<span class="il-name"></span><span class="il-start"></span>';
+      b.firstChild.textContent = T[l].languageName;
+      b.lastChild.textContent = T[l].tapToStart + ' →';
+      $('#introLangs').appendChild(b);
+    });
+  }
+
+  function loadVideo() {
+    var v = $('#introVideo');
+    v.muted = true;
+    var ok = function () { $('#screen-intro').classList.add('has-video'); };
+    v.addEventListener('playing', ok);
+    v.addEventListener('loadeddata', ok);
+    var useUrl = function (url) {
+      v.src = url;
+      if (state.screen === 'intro') v.play().catch(function () {});
+    };
+    // 1. built into the single-file version (hearing-station.html)
+    if (window.EMBEDDED_VIDEO) {
+      var bin = atob(window.EMBEDDED_VIDEO.data), bytes = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      useUrl(URL.createObjectURL(new Blob([bytes], { type: window.EMBEDDED_VIDEO.type })));
+      return;
+    }
+    // 2. downloaded in full (works offline from the web app's cache)
+    var tryFile = function (i) {
+      if (i >= CONFIG.VIDEO_FILES.length) {
+        // 3. last try: let the video element load the file itself
+        v.onerror = function () { v.removeAttribute('src'); v.onerror = null; };
+        useUrl(CONFIG.VIDEO_FILES[0]);
+        return;
+      }
+      fetch(CONFIG.VIDEO_FILES[i])
+        .then(function (r) { if (!r.ok) throw new Error('not found'); return r.blob(); })
+        .then(function (blob) { useUrl(URL.createObjectURL(blob)); })
+        .catch(function () { tryFile(i + 1); });
+    };
+    tryFile(0);
+  }
+
   /* ------------------------------------------------------------------
      Acknowledgement + hearWHO
      ------------------------------------------------------------------ */
@@ -120,8 +196,8 @@
   function openHearWHO() {
     if (!$('#ackBox').checked) return;
     window.location.href = CONFIG.HEARWHO_LINK;
-    // When the visitor comes back from the app, start fresh on the home page.
-    setTimeout(goHome, 1500);
+    // When the visitor comes back from the app, start fresh for the next visitor.
+    setTimeout(goIntro, 1500);
   }
 
   /* ------------------------------------------------------------------
@@ -628,8 +704,8 @@
   function touched() { state.lastTouch = Date.now(); }
 
   function checkIdle() {
-    if (state.screen === 'home') return;
-    if (Date.now() - state.lastTouch > CONFIG.IDLE_SECONDS * 1000) goHome();
+    if (state.screen === 'intro') return;
+    if (Date.now() - state.lastTouch > CONFIG.IDLE_SECONDS * 1000) goIntro();
   }
 
   var wakeLock = null;
@@ -651,7 +727,6 @@
      Wire up
      ------------------------------------------------------------------ */
   function init() {
-    try { var saved = localStorage.getItem('hearing-lang'); if (saved && T[saved]) state.lang = saved; } catch (e) {}
 
     drawCochlea();
     applyLanguage();
@@ -664,7 +739,7 @@
         return;
       }
       var lang = e.target.closest('[data-lang]');
-      if (lang) { setLanguage(lang.getAttribute('data-lang')); return; }
+      if (lang) { setLanguage(lang.getAttribute('data-lang')); goHome(); return; }
       var cond = e.target.closest('[data-cond]');
       if (cond) { openCondition(cond.getAttribute('data-cond')); return; }
       var act = e.target.closest('[data-action="choose-audio"]');
@@ -704,9 +779,11 @@
     document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
 
     loadAudio();
+    loadVideo();
+    document.body.setAttribute('data-screen', state.screen);
 
     // Offline support when the page is served over https (e.g. GitHub Pages)
-    if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
       navigator.serviceWorker.register('sw.js').catch(function () {});
     }
   }

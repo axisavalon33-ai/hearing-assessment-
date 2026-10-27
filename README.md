@@ -1,29 +1,48 @@
 # Hearing station – MEDSCOPE II
 
-A self-contained touch-screen page for the "Hearing" part of the exhibition.
-It runs in Chrome on an Android tablet (landscape) with wired headphones and
-needs no internet.
+A touch-screen web app for the "Hearing" part of the exhibition. It runs in
+Chrome on an Android tablet (landscape) with wired headphones and works
+without internet once it is installed.
+
+**How a visit goes:** a welcome screen loops your video, with three big
+language buttons on top (English · සිංහල · தமிழ்). The visitor picks a
+language, then chooses *Test your hearing* (opens hearWHO) or *Experience
+hearing loss*. After 60 seconds with no touch, the app stops any sound and
+goes back to the welcome video.
 
 ## The files
 
 | File | What it is |
 |---|---|
-| `index.html` | The page itself. **This is the file you open.** |
+| `index.html` | The app itself. |
 | `texts.js` | **All on-screen text** in English, Sinhala and Tamil. Edit translations here. |
 | `style.css` | Colours and layout. |
 | `app.js` | How it works, plus the sound processing. Settings are at the top (see below). |
+| `intro.mp4` | **You add this:** the looping welcome video. |
 | `speech-en.mp3`, `speech-si.mp3`, `speech-ta.mp3` | **You add these:** one speech recording per language. |
-| `hearing-station.html` | **The single-file version for the tablet** (Option A). Made automatically. Don't edit it. |
+| `sw.js`, `manifest.webmanifest`, `icon*.png`, `icon.svg` | Make it an installable app that works offline. |
+| `netlify.toml` | Hosting settings for Netlify. |
+| `hearing-station.html` | Single-file backup version (Option B). Made automatically. Don't edit it. |
 | `build.py`, `.github/workflows/build.yml` | Rebuild `hearing-station.html`. GitHub runs this for you. |
-| `sw.js`, `manifest.webmanifest`, `icon.svg` | Only used for the online-hosting option (Option B). They do no harm otherwise. |
 
-Keep all the files together in one folder, named `hearing`.
+## 1. Add your welcome video
 
-## 1. Add your speech recording
+- Name it exactly **`intro.mp4`** (all lowercase).
+- **Format:** MP4 (H.264), landscape, 1280×720 or 1920×1080. Most phones and
+  video editors (CapCut, Canva, etc.) export this by default.
+- **Length:** 10–30 seconds. It repeats endlessly, so a smooth loop looks best.
+- **Size:** keep it **under 25 MB** (GitHub's upload page takes up to 25 MB per file).
+- **Sound:** it always plays **muted** (Chrome only autoplays videos without
+  sound, and visitors are wearing headphones), so you don't need audio.
+- **Keep the bottom third fairly plain.** The title and the language buttons
+  sit there on a dark fade.
+
+Until a video is added, the welcome screen shows an animated "sound wave" background.
+
+## 2. Add your speech recordings
 
 Make one recording per language. Each should be a person speaking with a
-little background noise, about 15–20 seconds long. Name them exactly
-(all lowercase):
+little background noise, about 15–20 seconds long. Name them exactly:
 
 | Language | File name |
 |---|---|
@@ -31,25 +50,19 @@ little background noise, about 15–20 seconds long. Name them exactly
 | Sinhala | `speech-si.mp3` |
 | Tamil | `speech-ta.mp3` |
 
-Phone recordings saved as **.m4a** work too. Just rename them the same way, e.g.
-`speech-ta.m4a`. The page plays the recording that matches the language the
-visitor chose. If one language has no recording yet, it plays another
-language's recording instead. (A single file named `speech.mp3` also still
-works for all languages.)
-
-You don't need to worry about how loud the recording is. The page evens out the
-loudness and caps the maximum volume.
-
-If the page finds no recording at all, a condition page shows a
-**"Choose audio file"** button. Tap it and pick a recording from the tablet.
-It is used for the language currently selected. With Option A, the easiest
-way is to upload the recordings to GitHub so they are built into the single
-file (see below).
+Phone recordings saved as **.m4a** work too (e.g. `speech-ta.m4a`). The app
+plays the recording that matches the visitor's language. If one is missing,
+it uses another language's recording. You don't need to worry about loudness.
+The app evens it out and caps the volume.
 
 The conditions list page shows a small line at the bottom right, e.g.
-`English ✓ · සිංහල ✓ · தமிழ் ✗`, so you can check which recordings were found.
+`English ✓ · සිංහල ✓ · தமிழ் ✓`, so you can check which recordings were found.
 
-## 2. Install hearWHO first
+**Uploading to GitHub:** open the repository on github.com → make sure the
+branch drop-down (top left) shows the branch with these files → **Add file →
+Upload files** → drag the files in → **Commit changes**.
+
+## 3. Install hearWHO first
 
 Do this before the exhibition, while the tablet has internet:
 
@@ -60,64 +73,55 @@ Do this before the exhibition, while the tablet has internet:
 When hearWHO is installed, the **Continue** button opens it directly. If it is
 not installed, the button opens its Play Store page instead.
 
-## 3. Put the page on the tablet
+## 4. Put the web app online, then install it on the tablet
 
-### Option A – one file on the tablet (fully offline)
+The app needs to be on a web address (https) **once**, so the tablet can
+install it. After that it runs offline from the tablet. Pick one way to host it:
 
-Newer Android versions stop Chrome from opening `file:///` addresses, so
-use the **single-file version**, `hearing-station.html`. Everything (text,
-design, code, and your recording if it is in the repository) is built into
-that one file. Nothing else needs to be next to it.
+### Way 1 – Netlify (free, works with a private repository) – recommended
 
-**Step 1 – get the file with your recording inside**
+1. Go to **app.netlify.com** and sign up for free (you can sign up with your GitHub account).
+2. Click **Add new site → Import an existing project → GitHub**, allow
+   access, and choose the **hearing-test** repository.
+3. For **Branch to deploy**, choose the branch with your files. The other
+   settings are read from `netlify.toml`, so leave them as they are. Click **Deploy**.
+4. After a minute you get an address like `https://something.netlify.app`.
+   (You can rename it under *Site configuration → Change site name*.)
+5. From now on, every change you upload to GitHub (new video, new
+   recordings, edited `texts.js`) updates the site automatically.
 
-1. On github.com, open this repository and upload your three recordings
-   (**Add file → Upload files**, drag in all three files at once, then
-   **Commit changes**).
-2. Wait about a minute. GitHub automatically rebuilds `hearing-station.html`
-   with the recordings inside it (you can watch this under the **Actions** tab).
-   The same happens whenever you edit `texts.js` on GitHub.
-3. Click `hearing-station.html` → the **⋯** menu (or the download icon) →
-   **Download**.
+### Way 2 – GitHub Pages (free only if the repository is public)
 
-(If you skip uploading the recordings, the file still works. Visitors will see
-"Choose audio file" and you pick the recording on the tablet each time the
-page is opened.)
+GitHub Pages on a **private** repository needs a paid GitHub plan. If you're
+happy to make the repository public (anyone could then see the files,
+including the voice recordings), go to **Settings → General → Danger Zone →
+Change visibility → Public**. Then **Settings → Pages** → *Deploy from a
+branch* → pick the branch, folder `/ (root)` → **Save**. The address will be
+`https://axisavalon33-ai.github.io/hearing-test/`.
 
-**Step 2 – put it on the tablet**
+### Install it on the tablet
 
-1. Copy `hearing-station.html` to the tablet's **Download** folder: by USB
-   cable (choose **File transfer** on the tablet), by emailing it to
-   yourself, or by Google Drive.
-2. On the tablet, open the **Files** app (or **My Files** on Samsung) →
-   **Downloads**, tap `hearing-station.html`, and choose **Chrome** when it
-   asks which app to use. (Don't choose "HTML Viewer", which can't play sound.)
-3. To get back to it quickly next time, bookmark it in Chrome (⋮ → ☆), or
-   leave the tab open. The page resets itself between visitors without
-   reloading.
+1. With internet on, open your app's address in **Chrome** on the tablet.
+2. Tap a language, open *Experience hearing loss*, and play one condition.
+   This makes sure everything (video, recordings) is saved on the tablet.
+3. Chrome **⋮** menu → **Add to Home screen** → **Install**.
+4. An app icon called **Hearing** appears on the tablet's home screen. Open it
+   from there: it runs full-screen, without Chrome's address bar, and works
+   **without internet**.
+5. Test once with Wi-Fi turned off, to be sure.
 
-> The other files (`index.html`, `texts.js`, …) are the "source" you edit.
-> `hearing-station.html` is made from them automatically, so don't edit it
-> directly. Your changes would be lost at the next rebuild.
+When you change something later, open the app once with internet on. It
+picks up the new version (open it twice if you don't see the change straight away).
 
-### Option B – host it online once, then use it offline (most reliable)
+### Backup: the single-file version (no hosting at all)
 
-This uses free GitHub Pages hosting. The tablet only needs internet the first
-time it opens the page.
+`hearing-station.html` contains everything in one file (if the video is
+under 25 MB). GitHub rebuilds it automatically after each upload. Download
+it from GitHub, copy it to the tablet's **Download** folder, then open it from
+the **Files** app with **Chrome**. It works, but it opens inside Chrome with
+the address bar, and it can't be installed as an app.
 
-1. Make sure your recordings are uploaded into this repository next to `index.html`.
-2. On github.com, open the repository → **Settings** → **Pages**. Under
-   *Build and deployment*, choose **Deploy from a branch**, select the
-   branch that has these files, folder `/ (root)`, and click **Save**. (Pages on a private
-   repository needs a paid GitHub plan. A public repository works for free.)
-3. After a minute, the page address appears at the top of that screen, e.g.
-   `https://<your-username>.github.io/hearing-test/`.
-4. On the tablet (with internet), open that address in Chrome. Visit each
-   page once and play one condition, so everything is saved for offline use.
-5. Chrome ⋮ menu → **Add to Home screen** (or **Install app**). An icon appears
-   on the home screen. It opens full-screen and works without internet.
-
-## 4. Exhibition-day checklist
+## 5. Exhibition-day checklist
 
 - **Volume:** plug in the headphones, play a condition, and set the tablet
   volume to a comfortable level (start around 50%). The page has its own
@@ -125,22 +129,22 @@ time it opens the page.
 - **Screen timeout:** Settings → Display → Screen timeout → longest option
   (the page also asks the screen to stay on where Chrome allows it).
 - **Do Not Disturb:** turn it on so notifications don't pop up.
-- **Lock visitors into the page (optional):** Settings → Security → *App
-  pinning* / *Pin windows*. Then pin Chrome from the recent-apps screen.
+- **Lock visitors into the app (optional):** Settings → Security → *App
+  pinning* / *Pin windows*. Then pin the Hearing app from the recent-apps screen.
   Note: hearWHO can't open while Chrome is pinned. Leave pinning off if you
   want the "Test your hearing" button to work.
 - **Headphones:** mark the left cup clearly. The acoustic neuroma page affects
   the **left** ear only and has a *Test left / right* button.
-- The page goes full-screen on the first touch. After **60 seconds** with no
-  touch, it stops any sound and returns to the home page.
+- After **60 seconds** with no touch, the app stops any sound and returns to
+  the welcome video.
 
 ## Editing the text and translations
 
 Open `texts.js` in any text editor (on a computer: Notepad, TextEdit, or VS Code).
 Every language has the same list of entries. Change only the words inside the
 quotation marks. The easiest way is to edit it on github.com (open `texts.js`
-→ ✏️ pencil icon → **Commit changes**). GitHub then rebuilds
-`hearing-station.html`. Download it again and copy it to the tablet.
+→ ✏️ pencil icon → **Commit changes**). With Netlify, the app updates
+automatically. Open it once on the tablet with internet on.
 
 The Sinhala and Tamil text was written for you to check. Please have a fluent
 speaker review it, especially the medical terms.
@@ -152,7 +156,8 @@ speaker review it, especially the medical terms.
 | `MAX_VOLUME` | `0.35` | Master volume ceiling. Lower it to make everything quieter. |
 | `PEAK_LIMIT` | `0.4` | Hard limit. Output can never go above this level. |
 | `NORMAL_SECONDS` | `5` | Seconds of normal hearing before the condition starts. |
-| `IDLE_SECONDS` | `60` | No-touch time before it returns to the home page. |
+| `IDLE_SECONDS` | `60` | No-touch time before it returns to the welcome video. |
+| `VIDEO_FILES` | `intro.mp4`, `intro.webm` | Name of the welcome video. |
 | `TINNITUS` | ring / buzz / hiss levels | Loudness of the tinnitus sounds, kept below the speech. |
 | `FULLSCREEN` | `true` | Go full-screen on the first touch. |
 

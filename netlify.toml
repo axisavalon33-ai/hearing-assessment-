@@ -1,0 +1,10 @@
+# Netlify hosting settings (read automatically - nothing to fill in).
+[build]
+  publish = "."
+  command = ""
+
+# Always check for a new version of the offline helper and the texts.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"

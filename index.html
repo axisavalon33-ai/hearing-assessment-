@@ -3,10 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta name="theme-color" content="#0f6f7f">
+  <meta name="theme-color" content="#071526">
+  <meta name="mobile-web-app-capable" content="yes">
   <title>Hearing – MEDSCOPE II</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,29 +22,44 @@
 
 <div id="app" class="app">
 
+  <!-- ===================== WELCOME (looping video) ===================== -->
+  <section id="screen-intro" class="screen intro active">
+    <!-- Your video: intro.mp4 next to this page. It plays muted, on a loop. -->
+    <video id="introVideo" class="intro-video" muted loop playsinline autoplay preload="auto"></video>
+    <div class="intro-fallback" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div class="intro-shade"></div>
+
+    <div class="intro-top">
+      <span class="intro-ex" data-i18n="exhibition"></span>
+    </div>
+
+    <div class="intro-content">
+      <h1 class="intro-title" id="introTitle"></h1>
+      <p class="intro-prompt" id="introPrompt"></p>
+      <div class="intro-langs" id="introLangs"></div>
+    </div>
+  </section>
+
   <!-- ============================== HOME ============================== -->
-  <section id="screen-home" class="screen active">
+  <section id="screen-home" class="screen">
     <header class="topbar">
       <div class="brand">
         <span class="brand-ex" data-i18n="exhibition"></span>
         <span class="brand-title" data-i18n="sectionTitle"></span>
       </div>
+      <button class="nav-btn lang-switch" data-go="intro">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
+        <span data-i18n="languageName"></span>
+      </button>
     </header>
 
     <main class="home-main">
-      <div class="lang-row">
-        <span class="lang-label" data-i18n="chooseLanguage"></span>
-        <div class="lang-buttons">
-          <button class="lang-btn" data-lang="en">English</button>
-          <button class="lang-btn" data-lang="si">සිංහල</button>
-          <button class="lang-btn" data-lang="ta">தமிழ்</button>
-        </div>
-      </div>
-
       <p class="home-intro" data-i18n="homeIntro" data-fit></p>
 
       <div class="home-buttons">
-        <button class="big-btn big-btn-test" data-go="ack">
+        <button class="big-btn big-btn-test" data-fit data-go="ack">
           <svg class="big-icon" viewBox="0 0 64 64" aria-hidden="true">
             <path d="M22 44c0 6 4 10 9 10s7-3 8-7c1-3 3-5 6-8 4-4 6-8 6-14 0-11-8-19-19-19S13 14 13 25" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
             <path d="M24 26c0-5 3-8 8-8s8 3 8 8c0 4-3 6-5 8" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
@@ -54,7 +71,7 @@
           </span>
         </button>
 
-        <button class="big-btn big-btn-exp" data-go="list">
+        <button class="big-btn big-btn-exp" data-fit data-go="list">
           <svg class="big-icon" viewBox="0 0 64 64" aria-hidden="true">
             <path d="M10 38V32a22 22 0 0 1 44 0v6" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
             <rect x="6" y="36" width="12" height="20" rx="5" fill="currentColor"/>

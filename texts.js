@@ -20,7 +20,8 @@ window.TEXT = {
     languageName: "English",
     exhibition: "MEDSCOPE II – Neurosurgery and Neuroscience",
     sectionTitle: "Hearing",
-    chooseLanguage: "Choose language",
+    chooseLanguage: "Choose your language",
+    tapToStart: "Tap to start",
     homeIntro: "How well do you hear? Try a quick hearing check, or hear what the world sounds like with a hearing problem.",
     headphones: "Please put on the headphones",
 
@@ -119,7 +120,8 @@ window.TEXT = {
     languageName: "සිංහල",
     exhibition: "MEDSCOPE II – ස්නායු ශල්‍යකර්ම සහ ස්නායු විද්‍යාව",
     sectionTitle: "ශ්‍රවණය",
-    chooseLanguage: "භාෂාව තෝරන්න",
+    chooseLanguage: "ඔබේ භාෂාව තෝරන්න",
+    tapToStart: "ආරම්භ කිරීමට ඔබන්න",
     homeIntro: "ඔබට කොතරම් හොඳින් ඇසෙනවාද? කෙටි ශ්‍රවණ පරීක්ෂාවක් කර බලන්න, නැතහොත් ශ්‍රවණ ගැටලුවක් ඇති විට ලෝකය ඇසෙන ආකාරය අත්විඳින්න.",
     headphones: "කරුණාකර හෙඩ්ෆෝන් පළඳින්න",
 
@@ -218,7 +220,8 @@ window.TEXT = {
     languageName: "தமிழ்",
     exhibition: "MEDSCOPE II – நரம்பியல் அறுவை சிகிச்சை மற்றும் நரம்பியல்",
     sectionTitle: "செவித்திறன்",
-    chooseLanguage: "மொழியைத் தேர்ந்தெடுக்கவும்",
+    chooseLanguage: "உங்கள் மொழியைத் தேர்ந்தெடுங்கள்",
+    tapToStart: "தொடங்க அழுத்தவும்",
     homeIntro: "உங்களுக்கு எவ்வளவு நன்றாகக் கேட்கிறது? ஒரு சிறிய செவித்திறன் சோதனையைச் செய்து பாருங்கள், அல்லது கேட்டல் பிரச்சினை இருக்கும்போது உலகம் எப்படிக் கேட்கும் என்பதை அனுபவியுங்கள்.",
     headphones: "தயவுசெய்து ஹெட்ஃபோன்களை அணியுங்கள்",
 
